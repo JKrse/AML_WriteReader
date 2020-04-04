@@ -2,3 +2,4 @@
 test.py
 scripts/prep_submission.py
 scripts/prep_vocab.py
+.DS_store
