@@ -2,5 +2,6 @@
 test.py
 scripts/prep_submission.py
 scripts/prep_vocab.py
+scripts/noice_generator.py
 .DS_store
 __pycache__

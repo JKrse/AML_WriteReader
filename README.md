@@ -1,6 +1,6 @@
 # AML_WriteReader
 
-## Get started! 
+# Get started! 
 To generate the folder structure for this project: 
 ```
 python config.py
@@ -14,6 +14,7 @@ Instal fasttext:
 pip install -U gensim
 ```
 
+## Download pre-trained model: 
 To download the pre-trained fastText "da" model download the binary file: https://fasttext.cc/docs/en/pretrained-vectors.html (bin+text)
 
 
