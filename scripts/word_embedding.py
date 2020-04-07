@@ -2,16 +2,35 @@
 import numpy as np
 from config import *
 import string
-from progressbar import ProgressBar 
 import fasttext
 import re
+import argparse
+
+# ============================================================================================================
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-fname', default="data/proposals2.npz", help='File with image links')
+parser.add_argument('-model', type=str, default="wiki.da/wiki.da.bin", help='The model to be loaded')
+args = vars(parser.parse_args())
+
+# f_name = "data/proposals2.npz"
+# model = "wiki.da/wiki.da.bin"
+
+f_name = args['fname']
+model = args['model']
+
+
+# Arg: datafile, load_model
 
 # ============================================================================================================
 # Generate all folders needed: 
+# local_files = Config.local_path_temp
+
 local_files = Config.local_path
 
 # Load data:
-data = np.load(local_files / "data" / "proposals2.npz", encoding="latin1")
+dir_data = local_files / f_name
+data = np.load(dir_data, encoding="latin1")
 # list(data.keys())
 # list(data.items())
 
@@ -21,6 +40,7 @@ proposals = data["proposals"]
 # vocab = data["vocab"] # vocab is in proposals
 
 # ============================================================================================================
+
 
 def clean_string(txt, lower_all=True, lower_beg_punc=False, punctuation=True): 
     """
@@ -67,10 +87,14 @@ def clean_string(txt, lower_all=True, lower_beg_punc=False, punctuation=True):
 
 # =================== 
 # Load model .bin file: 
-model = fasttext.load_model(f"{str(local_files)}/wiki.da/wiki.da.bin")
+print("[INFO] Loading model")
+dir_model = f"{str(local_files)}/{model}"
+model = fasttext.load_model(dir_model)
+print("[INFO] Done loading model")
 
 idx_sent, sentences, tokens, embeddings = [], [], [], []
 
+print("[INFO] Generating embeddings")
 for idx, sent in enumerate(adult): 
     # Clean sentence and tokens: 
     sent_temp, tokens_temp = clean_string(sent, lower_all=True, punctuation=True)
@@ -91,7 +115,17 @@ embeding_dict["sentence"] = sentences
 embeding_dict["token"] = tokens
 embeding_dict["embedding"] = embeddings
 
+print("[INFO] Saving...")
+np.savez(f"{local_files}/data/prep_data.npz",**embeding_dict)
+print("[INFO] Done...")
 
+
+
+
+
+
+# ============================================================================================================
+# ============================================================================================================
 # Problem with Tokens ()
 # z = 0
 # adult[z]

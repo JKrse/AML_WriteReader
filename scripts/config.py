@@ -9,7 +9,7 @@ class Config(object):
     """
 
     local_path = Path("./local_files/")
-    # local_path = Path("./../local_files/")
+    local_path_temp = Path("./../local_files/")
 
 
 def environment_setup():
