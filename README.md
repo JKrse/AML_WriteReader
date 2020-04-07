@@ -7,15 +7,20 @@ python config.py
 ```
 
 # Preparation: 
-There’s a python package called ‘fasttext’ which introduces high level interface to use the vector files along with some other fastText functionalities. But working with that package in my case, I didn’t find any convenience. Instead we used  ‘gensim’,  
-Instal fasttext: 
+We use the python package called ‘fasttext’ which introduces high level interface to use the vector files along with some other fastText functionalities:
 
 ```
-pip install -U gensim
+pip install fasttext
 ```
 
 ## Download pre-trained model: 
 To download the pre-trained fastText "da" model download the binary file: https://fasttext.cc/docs/en/pretrained-vectors.html (bin+text)
+
+## Download images for the experiment: 
+To download all images needed for feature extraction: 
+```
+python scripts/image_scraper.py -fname "data/proposals2.npz" -url_name "url"
+```
 
 
 # Dependencies: 
