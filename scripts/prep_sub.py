@@ -12,8 +12,13 @@ def image_name(url):
 
 # ============================================================================================================
 
-
+"""
+Combine Image features and word embedding datasets 
+Copy structure from cpvr
+Split data: train, test, val ({"human": {..}, "mc": {..}})
+"""
 
 dd = np.load("../local_files/data/image_features.npz")
 list(dd)
 dd["Images"]
+dd["Image_features"][0]
