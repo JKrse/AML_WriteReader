@@ -24,7 +24,7 @@ model = args['model']
 
 # ============================================================================================================
 # Generate all folders needed: 
-# local_files = Config.local_path_temp
+# local_files = Config.local_path_temp 
 
 local_files = Config.local_path
 
