@@ -13,19 +13,19 @@ parser.add_argument('-fname', default="data/proposals2.npz", help='File with ima
 parser.add_argument('-model', type=str, default="wiki.da/wiki.da.bin", help='The model to be loaded')
 args = vars(parser.parse_args())
 
-# f_name = "data/proposals2.npz"
-# model = "wiki.da/wiki.da.bin"
-
 f_name = args['fname']
 model = args['model']
+local_files = Config.local_path
 
+# # Debug
+# local_files = Config.local_path_temp 
+# f_name = "data/proposals2.npz"
+# model = "wiki.da/wiki.da.bin"
 
 # Arg: datafile, load_model
 
 # ============================================================================================================
 # Generate all folders needed: 
-# local_files = Config.local_path_temp 
-local_files = Config.local_path
 
 # Load data:
 dir_data = local_files / f_name
@@ -67,17 +67,18 @@ def clean_string(txt, lower_all=True, lower_beg_punc=False, punctuation=True):
         
         for _ in range(sentence2token.count("")):
             sentence2token.remove("")
-    else: 
-        sentence2token = re.findall(r"[\w']+|[.,!?;]", txt)
+    # else: 
+    #     sentence2token = re.findall(r"[\w']+|[.,!?;]", txt)
 
-    if lower_beg_punc: 
-        sentence2token[0] = sentence2token[0].lower()
+    # if lower_beg_punc: 
+    #     sentence2token[0] = sentence2token[0].lower()
 
-        for i in range(len(sentence2token)-2): 
-            if sentence2token[i] == ".":
-                sentence2token[i+1] = sentence2token[i+1].lower()
+        # for i in range(len(sentence2token)-2): 
+        #     if sentence2token[i] == ".":
+        #         sentence2token[i+1] = sentence2token[i+1].lower()
     
     tokens = sentence2token
+    # sentence = txt
     sentence = " ".join(tokens)
     return sentence, tokens
 
