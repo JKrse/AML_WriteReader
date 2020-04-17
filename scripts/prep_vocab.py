@@ -126,7 +126,7 @@ def word_embedding(words, model, dim=300):
 
 # Load data: 
 data = np.load(f_name)
-txt_data = data["adult_texts"]
+# txt_data = data["adult_texts"]
 
 ################################################
 #### Prepare the embedding for the vocabulary: 
@@ -183,7 +183,7 @@ word_embedding_300, word_embedding_300_dict = word_embedding(write_word_10k, mod
 #             ret[key] = value
 #     return ret
 
-# D50  = load_glove('../local_files/glove.6B.300d.txt')
+# D300  = load_glove('../local_files/glove.6B.300d.txt')
 
 ################################################ *** Not sure this is needed ***
 #### Embed every word in the adult text: 
