@@ -10,6 +10,7 @@ class Config(object):
 
     local_path = Path("./local_files/")
     local_path_temp = Path("./../local_files/")
+    vocab_size = 10000
 
 
 def environment_setup():
