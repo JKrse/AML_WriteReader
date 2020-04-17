@@ -10,7 +10,7 @@ import string
 import operator
 import fasttext
 # ============================================================================================================
-d =5
+
 parser = argparse.ArgumentParser(description='Process some integers.')
 parser.add_argument(
         '--f_name', type=str, default=f"{Config.local_path}/data/proposals2.npz",
