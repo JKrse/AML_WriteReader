@@ -11,7 +11,7 @@ import argparse
 local_path = Config.local_path
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-fname', default=f"./{local_path}/images", help='Path to folder(s) with images')
+parser.add_argument('--fname', default=f"./{local_path}/images", help='Path to folder(s) with images')
 args = vars(parser.parse_args())
 
 f_name = args['fname']

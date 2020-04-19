@@ -1,6 +1,6 @@
 /local_files/*
 test.py
-scripts/prep_submission.py
+scripts/prep_submission_old.py
 scripts/prep_vocab_old.py
 scripts/noice_generator.py
 .DS_store

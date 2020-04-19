@@ -14,7 +14,7 @@ To manully do this please follow the insctructions:
 First we download all images needed for feature extraction: 
 
 ```
-python scripts/image_scraper.py -fname "data/proposals2.npz" -url_name "url"
+python scripts/image_scraper.py --fname "data/proposals2.npz" --url_name "url"
 ```
 
 This process can easily take an hour. For the 5k sample size we experinced an error for 10 of the urls. Since this is a significantly small amount of images, these samples will simple be removed at a later state when the images features are merged in "" (script). 
@@ -28,7 +28,7 @@ pip install opencv-python
 
 To get the features from each image: 
 ```
-python scripts/image_feature_extraction.py -fname "./local_files/images"
+python scripts/image_feature_extraction.py --fname "./local_files/images"
 ```
 This process takes 1-2 hours, hence we recommend downloading the preprossed data: (LINK).
 
@@ -44,7 +44,7 @@ pip install fasttext
 
 To generate the data with word embeddings: 
 ```
-python scripts/word_embedding.py -fname "data/proposals2.npz" -model "wiki.da/wiki.da.bin"
+python scripts/word_embedding.py --fname "data/proposals2.npz" --model "wiki.da/wiki.da.bin"
 ```
 
 ## Prepare the final preprossed dataset: 

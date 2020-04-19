@@ -10,8 +10,8 @@ import numpy as np
 # ============================================================================================================
 #Define the argument parser to read in the URL
 parser = argparse.ArgumentParser()
-parser.add_argument('-fname', default="data/proposals2.npz", help='File with image links')
-parser.add_argument('-url_name', type=str, default="url", help='Name of the title for the URL')
+parser.add_argument('--fname', default="data/proposals2.npz", help='File with image links')
+parser.add_argument('--url_name', type=str, default="url", help='Name of the title for the URL')
 args = vars(parser.parse_args())
 
 
