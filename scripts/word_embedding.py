@@ -9,8 +9,8 @@ import argparse
 # ============================================================================================================
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-fname', default="data/proposals2.npz", help='File with image links')
-parser.add_argument('-model', type=str, default="wiki.da/wiki.da.bin", help='The model to be loaded')
+parser.add_argument('--fname', default="data/proposals2.npz", help='File with image links')
+parser.add_argument('--model', type=str, default="wiki.da/wiki.da.bin", help='The model to be loaded')
 args = vars(parser.parse_args())
 
 f_name = args['fname']
@@ -120,34 +120,3 @@ np.savez(f"{local_files}/data/prep_data.npz",**embeding_dict)
 print("[INFO] Done...")
 
 
-
-# ============================================================================================================
-# ============================================================================================================
-# Problem with Tokens ()
-# z = 0
-# adult[z]
-# txt = adult[z]
-# adult[0:10]
-
-# ft.tokenize(adult[0]) # Problem: "Noah." and not "Noah", "."
-# sentence, _ = clean_string(adult[z], lower_all=True, punctuation=True)
-
-
-# model.get_nearest_neighbors("abe", k=5)
-
-# What is the difference: 
-# from gensim.models.wrappers import FastText # import fasttext
-# from gensim.models.fasttext import FastText # -> same as:
-# from gensim.models import FastText
-
-# model.get_sentence_vector("hej med dig").shape
-
-# Load model .vec file: 
-# vec_file = open(f"{str(local_files)}/wiki.da/wiki.da.vec", 'r', encoding='utf-8').readlines()
-# vec_file[2]
-
-# Load trained FastText model: 
-# model2 = FastText.load_fasttext_format(f"{str(local_files)}/wiki.da/wiki.da.bin")
-
-# model.get_nearest_neighbors("abe", k=10)
-# model2.most_similar("abe")
