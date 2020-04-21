@@ -31,14 +31,14 @@ python config.py
 
 Downloading and performing feature extraction for all images takes quite a lot of time 2-3 hours. Hence, to ease this process we recommend downloading preprocessed dataset (LINK)
 
-2. Manully download the images run: 
+* Sub Manully download the images: 
 ```
 python scripts/image_scraper.py --fname "data/proposals2.npz" --url_name "url"
 ```
 
 This process can easily take an hour. For the 5k sample size we experinced an error for 10 of the urls. Since this is a significantly small amount of images, these samples will simple be removed at a later state (```prep_submission.py```). 
 
-3. Having all the images downloaded the next step is to perfom feature extraction for each image. 
+* Sub Having all the images downloaded the next step is to perfom feature extraction for each image. 
 ```
 pip install opencv-python
 ```
@@ -47,28 +47,25 @@ To get the features from each image:
 ```
 python scripts/image_feature_extraction.py --fname "./local_files/images"
 ```
-This process takes 1-2 hours, hence we recommend downloading the preprossed data: (LINK).
 
-## Download pre-trained model: 
-To download the pre-trained fastText "da" model download the binary file: https://fasttext.cc/docs/en/pretrained-vectors.html (bin+text)
-
-
-## Evaluation
-
-
-
-
-## Generate dataset with word embeddings:
-We use the python package called ‘fasttext’ which introduces high level interface to use the vector files along with some other fastText functionalities:
+4. To generate the embedding for the dataset we use the python package called ‘fasttext’ which introduces high level interface to use the vector files along with some other fastText functionalities:
 
 ```
 pip install fasttext
 ```
 
-To generate the data with word embeddings: 
+Download the pre-trained fastText "da" model and the binary file: https://fasttext.cc/docs/en/pretrained-vectors.html (bin+text).
+
+5. Generate vocabulrary.
 ```
-python scripts/word_embedding.py --fname "data/proposals2.npz" --model "wiki.da/wiki.da.bin"
+python scripts/prep_vocab.py --model "wiki.da/wiki.da.bin"
 ```
+
+6.
+
+## Evaluation
+
+
 
 ## Prepare the final preprossed dataset: 
 
