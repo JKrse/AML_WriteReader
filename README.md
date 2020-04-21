@@ -29,16 +29,29 @@ The project uses different data source provided by WriteReaders. The objective i
 python config.py
 ```
 
-Downloading and performing feature extraction for all images takes quite a lot of time 2-3 hours. Hence, to ease this process we recommend downloading preprocessed dataset (LINK)
+Downloading and performing feature extraction for all images takes quite a lot of time 2-3 hours. Hence, to ease this process we recommend downloading preprocessed dataset (LINK). To do it manully find the instructions further down. 
 
-* Sub Manully download the images: 
+2. To generate the embedding for the dataset we use the python package called ‘fasttext’ which introduces high level interface to use the vector files along with some other fastText functionalities:
+
+```
+pip install fasttext
+```
+
+Download the pre-trained fastText "da" model and the binary file: https://fasttext.cc/docs/en/pretrained-vectors.html (bin+text).
+
+3. Generate vocabulrary
+```
+python scripts/prep_vocab.py --model "wiki.da/wiki.da.bin"
+```
+
+### Manully download images and performing feature extraction: 
 ```
 python scripts/image_scraper.py --fname "data/proposals2.npz" --url_name "url"
 ```
 
 This process can easily take an hour. For the 5k sample size we experinced an error for 10 of the urls. Since this is a significantly small amount of images, these samples will simple be removed at a later state (```prep_submission.py```). 
 
-* Sub Having all the images downloaded the next step is to perfom feature extraction for each image. 
+Having all the images downloaded the next step is to perfom feature extraction for each image. 
 ```
 pip install opencv-python
 ```
@@ -48,32 +61,18 @@ To get the features from each image:
 python scripts/image_feature_extraction.py --fname "./local_files/images"
 ```
 
-4. To generate the embedding for the dataset we use the python package called ‘fasttext’ which introduces high level interface to use the vector files along with some other fastText functionalities:
-
-```
-pip install fasttext
-```
-
-Download the pre-trained fastText "da" model and the binary file: https://fasttext.cc/docs/en/pretrained-vectors.html (bin+text).
-
-5. Generate vocabulrary.
-```
-python scripts/prep_vocab.py --model "wiki.da/wiki.da.bin"
-```
-
-6.
-
 ## Evaluation
 
-
-
-## Prepare the final preprossed dataset: 
-
-
-# RUNNING
-
+1. Prepare the data
 ```
+python scripts/prep_submission.py --name_human "adult_texts" --name_mc "proposals"
+```
+
+Note that we assume you've followed through the steps in the *Preparation* section before running this command. This script will create a folder `data/proposals` and three ```.npy``` files that contain data needed for training the metric. Please use the following command to train the metric:
+```bash
 python scripts/score.py --name proposals
 ```
+
+The results will be logged in `local_files/proposals_scoring` directory. If you use the default model architecture, the results will be in `local_files/proposals_scoring/mlp_1_img_1_512_0.txt`.
 
 
