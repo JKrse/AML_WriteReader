@@ -317,7 +317,7 @@ def train(sess, model, data, gen_model, epoch, dim_feat=2048, config=Config(), v
         mc_sample = False
 
     # for i in range(epoch_size): 
-    for i in range(100): # CHANGE
+    for i in range(300): # CHANGE
         if i == epoch_size - 1:
             idx_batch = idx[batch_size*i:]
         else:
