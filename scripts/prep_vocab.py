@@ -10,6 +10,15 @@ import string
 import operator
 import fasttext
 # ============================================================================================================
+# f_name = f"{Config.local_path_temp}/data/proposals2.npz"
+# f_vocab = f"{Config.local_path_temp}/data/proposals.npz"
+# output_path =f"{Config.local_path_temp}/data"
+# model = "wiki.da/wiki.da.bin"
+# local_files = Config.local_path_temp
+# # Make own function here: 
+# vocab = np.load(f_vocab)["vocab"]
+
+# ============================================================================================================
 
 parser = argparse.ArgumentParser(description='Process some integers.')
 parser.add_argument(
@@ -31,7 +40,6 @@ f_name = args.f_name
 f_vocab = args.f_vocab
 output_path = args.output_path
 model = args.model
-
 local_files = Config.local_path
 
 # ============================================================================================================
@@ -97,7 +105,7 @@ def word_embedding(words, model, dim=300):
         model to be used for embedding
     """
 
-    W = np.zeros((len(words), dim), dtype=float)
+    W = np.zeros((len(words), dim), dtype=np.float32)
     W_dict = {}
     for i, word in enumerate(words):
         # Fasttext embedding 
@@ -108,30 +116,13 @@ def word_embedding(words, model, dim=300):
 
     return W, W_dict
 
-
 # ============================================================================================================
-# ============================================================================================================
-
-# Debug: 
-# f_name = f"{Config.local_path_temp}/data/proposals2.npz"
-# f_vocab = f"{Config.local_path_temp}/data/proposals.npz"
-# output_path =f"{Config.local_path_temp}/data"
-# model = "wiki.da/wiki.da.bin"
-# local_files = Config.local_path_temp
-# # Make own function here: 
-# vocab = np.load(f_vocab)["vocab"]
-
-# ============================================================================================================
-# ============================================================================================================
-
-# Load data: 
-data = np.load(f_name)
-# txt_data = data["adult_texts"]
 
 ################################################
 #### Prepare the embedding for the vocabulary: 
+# Load data: 
+data = np.load(f_name)
 
-# sorted_dict = vocabulary_gen(txt_data)
 # With frequency: 
 sorted_dict = np.load(f_vocab)["vocab"]
 
@@ -163,52 +154,13 @@ idx_to_word = {i: w for w, i in word_to_idx.items()}
 
 # Load model .bin file: 
 print("[INFO] Loading model")
-dir_model = f"{str(local_files)}/{model}"
+dir_model = f"{str(local_files)}/{str(model)}"
 model = fasttext.load_model(dir_model)
 print("[INFO] Done loading model")
 
 # Embed the vocabulary: 
-# word_embedding_300, word_embedding_300_dict = word_embedding(write_word_10k[4:], model)
 word_embedding_300, word_embedding_300_dict = word_embedding(write_word_10k, model)
 
-# ============================================================================================================
-
-# def load_glove(filename):
-#     ret = {}
-#     with open(filename) as f:
-#         for l in f:
-#             lst = l.split()
-#             key = lst[0]
-#             value = np.array(lst[1:]).astype(np.float)
-#             ret[key] = value
-#     return ret
-
-# D300  = load_glove('../local_files/glove.6B.300d.txt')
-
-################################################ *** Not sure this is needed ***
-#### Embed every word in the adult text: 
-# print("[INFO] Extract all words in the text")
-# words_freq = vocabulary_gen(txt_data)
-# words = [i[0] for i in words_freq]
-
-# list(vocab_embeddings_dict) 
-# vocab_dict = vocab_embeddings_dict
-
-# embeddings = D_to_W(words, vocab_dict)
-
-# # Dictionary to word
-# def D_to_W(words, vocab_dict, dim=300):
-#     W = np.zeros((len(words), dim), dtype=float)
-
-#     for i, word in enumerate(words):
-#         if word in vocab_dict:
-#             W[i, :] = vocab_dict[word]
-#         else: 
-#             W[i, :] = np.zeros(dim) # ATM no better way
-#     return W
-
-
-# ============================================================================================================
 # ============================================================================================================
 print("[INFO] Saving ...")
 ###### Save data ######
@@ -225,3 +177,18 @@ f.write( str(word_embedding_300_dict) )
 f.close()
 
 print("[INFO] Done")
+
+
+
+# ============================================================================================================
+# def load_glove(filename):
+#     ret = {}
+#     with open(filename) as f:
+#         for l in f:
+#             lst = l.split()
+#             key = lst[0]
+#             value = np.array(lst[1:]).astype(np.float)
+#             ret[key] = value
+#     return ret
+
+# D300  = load_glove('../local_files/glove.6B.300d.txt')

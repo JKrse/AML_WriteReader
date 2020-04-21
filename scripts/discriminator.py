@@ -332,9 +332,9 @@ def train(sess, model, data, gen_model, epoch, dim_feat=2048, config=Config(), v
             """
             Train the real caption against 3 types other caption types:
             if 0: 
-                Machine generated captions (e.g. NeuralTalk)
+                Machine generated captions (e.g. proposals [or Neuraltalk])
             if 1: 
-                Machicne sample (our noicy data)
+                Machicne sample (our noicy data) **Not used here**
             if 2:
                 Random Captions(RC)     [0]
                 Random Word (RW)        [1]
@@ -381,7 +381,9 @@ def train(sess, model, data, gen_model, epoch, dim_feat=2048, config=Config(), v
                 else:
                     x[j*2+1+len(idx_batch)*num_input, :] = gen_cap
             elif rand_ind == 1:  # MC samples
-
+                """
+                Not used in this reconstruction (comes from mc_samples: e.g. neuraltalk)
+                """
                 mc_cap = copy.deepcopy(
                         data['captions']['dis'][filename[idx_batch[j]]]['mc_samples']) # CHANGE MADE HERE 'mc_samples' not sure
                 
@@ -396,15 +398,20 @@ def train(sess, model, data, gen_model, epoch, dim_feat=2048, config=Config(), v
                     while rand_j == idx_batch[j]:
                         rand_j = np.random.randint(0,len(filename))
                     fake_cap = copy.deepcopy(data['captions']['dis'][filename[rand_j]]['human'])
-                    fake_idx = list(range(len(fake_cap)))
-                    random.shuffle(fake_idx)
-                    x[j*2+1+len(idx_batch)*num_input, :] = fake_cap[fake_idx[0]]
+                    # fake_idx = list(range(len(fake_cap)))
+                    # random.shuffle(fake_idx)
+                    # x[j*2+1+len(idx_batch)*num_input, :] = fake_cap[fake_idx[0]]
+                    x[j*2+1+len(idx_batch)*num_input, :] = fake_cap
                 elif rand_ind_2 == 1: # random word replacement of human caption
                     human_cap = copy.deepcopy(
                             data['captions']['dis'][filename[idx_batch[j]]]['human'])
-                    human_idx = list(range(len(human_cap)))
-                    random.shuffle(human_idx)
-                    human_cap = human_cap[human_idx[0]]
+                    """
+                    Authers has 5 people annotate each image, hence what they do here is to randomly select one of them
+                    We don't have this 
+                    """
+                    # human_idx = list(range(len(human_cap)))
+                    # random.shuffle(human_idx)
+                    # human_cap = human_cap[human_idx[0]] # This is for the original
                     if model._eos in list(human_cap):
                         end_position = list(human_cap).index(model._eos)
                     else:
@@ -414,13 +421,13 @@ def train(sess, model, data, gen_model, epoch, dim_feat=2048, config=Config(), v
                     rand_word = np.random.randint(config.vocab_size-4, size=(n_position,)) + 4
                     human_cap[rand_position] = rand_word
                     x[j*2+1+len(idx_batch)*num_input, :] = human_cap
-
+ 
                 elif rand_ind_2 == 2: # random permutation of human captions
                     human_cap = copy.deepcopy(
                             data['captions']['dis'][filename[idx_batch[j]]]['human'])
-                    human_idx = list(range(len(human_cap)))
-                    random.shuffle(human_idx)
-                    human_cap = human_cap[human_idx[0]]
+                    # human_idx = list(range(len(human_cap)))
+                    # random.shuffle(human_idx)
+                    # human_cap = human_cap[human_idx[0]]
                     if model._eos in list(human_cap):
                         end_position = list(human_cap).index(model._eos)
                     else:

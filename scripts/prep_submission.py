@@ -22,18 +22,18 @@ name_mc = "proposals"
 num_steps = 15
 # ============================================================================================================
 
-arser = argparse.ArgumentParser(description='Process some integers.')
+parser = argparse.ArgumentParser(description='Process some integers.')
 parser.add_argument(
-        '--data', type=str, default=f"{Config.local_path}/data/proposals2.npz.npz"
+        '--data', type=str, default=f"{Config.local_path}/data/proposals2.npz",
         help='Path to the embeddings.')
 parser.add_argument(
-        '--image_feat', type=str, default=f"{Config.local_path}/data/image_features.npz"
+        '--image_feat', type=str, default=f"{Config.local_path}/data/image_features.npz",
         help='Path to the image features.')
 parser.add_argument(
         '--word-to-idx', type=str, default=f"{Config.local_path}/data/word_to_idx.npy",
         help='Path to the npy file that contains mapping from word to index.')
 parser.add_argument(
-        '--output-path', type=str, default=f"{Config.local_path}/data",
+        '--output_path', type=str, default=f"{Config.local_path}/data",
         help='Path to the JSON file that contains how to split the dataset')
 parser.add_argument(
         '--noicy', type=bool, default=False,
@@ -50,9 +50,9 @@ parser.add_argument(
 
 args = parser.parse_args()
 
-assert args.name != 'human' # Prevent naming conflits
+assert args.name_human != 'human' # Prevent naming conflits
 
-output_path = os.path.join(args.output_path, args.name)
+output_path = args.output_path
 word_to_idx = args.word_to_idx 
 data_path = args.data
 image_feat = args.image_feat
@@ -66,37 +66,6 @@ if args.noicy == True:
     args.name = "random_word_gen"
 
 # ============================================================================================================
-
-
-def prep_caption_feat(filenames, data):
-    feat = {}
-    pbar = progressbar.ProgressBar()
-    for i in pbar(range(len(filenames))):
-        filename = filenames[i]
-        feat[filename] = {}
-        gt = data[filename][type_origin]
-        nt = data[filename][args.name]
-        feat[filename][type_origin] = np.zeros((len(gt), args.num_steps), dtype=np.int32)
-        feat[filename][args.name] = np.zeros((args.num_steps), dtype=np.int32)
-        for j in range(len(gt)):
-            ann = gt[j]
-            for k in range(min(len(ann), args.num_steps)):
-                if ann[k] in word2idx:
-                    feat[filename][type_origin][j,k] = word2idx[ann[k]]
-                else:
-                    feat[filename][type_origin][j,k] = word2idx['<unk>']
-            if len(ann) < args.num_steps:
-                feat[filename][type_origin][j,len(ann)] = word2idx['<eos>']
-
-        for j in range(min(args.num_steps, len(nt))):
-            if nt[j] in word2idx:
-                feat[filename][args.name][j] = word2idx[nt[j]]
-            else:
-                feat[filename][args.name][j] = word2idx['<unk>']
-            if len(nt) < args.num_steps:
-                feat[filename][args.name][len(nt)] = word2idx['<eos>']
-    return feat
-
 
 def clean_string(txt, lower_all=True, lower_beg_punc=False, punctuation=True): 
     """
@@ -180,6 +149,7 @@ def gen_new_data(filenames, data, word2idx, features):
         for j in range(caps.shape[0]):
             captions[c, :] = caps
 
+
     ret = {}
     ret['file_names'] = filenames
     ret['image_idxs'] = image_idxs
@@ -187,7 +157,8 @@ def gen_new_data(filenames, data, word2idx, features):
     ret['captions'] = {}
     ret['captions']['gen'] = captions
     ret['captions']['dis'] = data
-    ret['features'] = features
+    ret['features'] = {}
+    ret['features']['dis'] = features
 
     return ret
 
@@ -242,33 +213,26 @@ filenames = data["Images"]
 name_idx = ["adult_token", "proposals_token"]
 
 
+img_feat = []
+for i, filename in enumerate(filenames): 
+    img_feat.append([filename, data["Image_features"][i]])
+features = dict(img_feat)
+
 # Prep caption: 
 prep_data = prep_caption_feat(filenames, data, name_idx)
-data_ready = gen_new_data(filenames, prep_data, word2idx, data["Image_features"])
+data_ready = gen_new_data(filenames, prep_data, word2idx, features)
 
 
+# ============================================================================================================
+print("[INFO] Saving ...")
 np.save(os.path.join(output_path, 'data_train_full.npy'), data_ready)
 np.save(os.path.join(output_path, 'data_val_full.npy'),   data_ready)
 np.save(os.path.join(output_path, 'data_test_full.npy'),  data_ready)
-
+print("[INFO] Done")
+# DO IT AT THE DATAFRAME: 
 # Train, test, val: 
-idx_train = random.sample(range(len(data_ready["file_names"])), int(len(data_ready["file_names"])*0.8))
-idx_test = range(len(data_ready["file_names"]))- idx_train
+# idx_train = random.sample(range(len(data_ready["file_names"])), int(len(data_ready["file_names"])*0.8))
+# idx_test = range(len(data_ready["file_names"]))- idx_train
 
-samples_no = range(len(data_ready["file_names"]))
+# samples_no = range(len(data_ready["file_names"]))
 
-
-
-
-def train_test_val(dict, train_frac = 0.7, test_frac=0.15, val_frac=0.05): 
-
-    train, test, val = np.split(random.sample(samples_no, len(samples_no)), 
-    [int(train_frac * len(samples_no)), int(1-test_frac * len(samples_no))])
-
-    train_final = {}
-    
-    train = {
-        
-    }
-
-    
