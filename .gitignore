@@ -1,9 +1,11 @@
+
 /local_files/*
-test.py
 scripts/prep_submission_old.py
 scripts/prep_vocab_old.py
 scripts/noice_generator.py
-.DS_store
-scripts/.DS_store
+
+test.py
+
 __pycache__
+.DS_store
 .vscode/*
