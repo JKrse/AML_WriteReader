@@ -14,8 +14,6 @@ from tensorflow.python.util import nest
 from discriminator import *
 from config import *
 
-# TEST_en
-
 tf.app.flags.DEFINE_string('data_path', f"{Config.local_path}/data",
                            """Path where the data will be loaded.""")
 tf.app.flags.DEFINE_string('name', "proposals", #"mysubmission", # skal lige hardcodes om (sat til neuraltalk for nemhedens skyld)
