@@ -13,13 +13,13 @@ from sklearn.model_selection import train_test_split
 import random
 
 # ============================================================================================================
-output_path = f"{Config.local_path_temp}/data"
-word_to_idx = f"{Config.local_path_temp}/data/word_to_idx.npy"
-data_path = f"{Config.local_path_temp}/data/proposals2.npz"
-image_feat = f"{Config.local_path_temp}/data/image_features.npz"
-name_human = "adult_texts"
-name_mc = "proposals"
-num_steps = 15
+# output_path = f"{Config.local_path_temp}/data"
+# word_to_idx = f"{Config.local_path_temp}/data/word_to_idx.npy"
+# data_path = f"{Config.local_path_temp}/data/proposals2.npz"
+# image_feat = f"{Config.local_path_temp}/data/image_features.npz"
+# name_human = "adult_texts"
+# name_mc = "proposals"
+# num_steps = 15
 # ============================================================================================================
 
 parser = argparse.ArgumentParser(description='Process some integers.')
@@ -163,6 +163,28 @@ def gen_new_data(filenames, data, word2idx, features):
     return ret
 
 
+def add_sent_token(data):
+    """
+    Data is a dictionary
+    """
+    data["adult_sent"] = [clean_string(i)[0] for i in data[name_human]]
+    data["adult_token"] = [clean_string(i)[1] for i in data[name_human]]
+
+    data["proposals_sent"] = [clean_string(i)[0] for i in data[name_mc]]
+    data["proposals_token"] = [clean_string(i)[1] for i in data[name_mc]]
+
+    return data
+
+
+def add_features(filenames, data): 
+    img_feat = []
+    for i, filename in enumerate(filenames): 
+        img_feat.append([filename, data[i]])
+    features = dict(img_feat)
+
+    return features
+
+
 # ============================================================================================================
 
 output_path =  Path(os.path.join(output_path, name_mc))
@@ -189,11 +211,18 @@ df_feat = pd.DataFrame(img_feat)
 df_data = pd.DataFrame(data)
 df = pd.merge(df_feat, df_data, how="inner", on="Images")
 
-# Convert back to dict: 
-data = df.to_dict("list")
+df = df.rename(columns = {name_human: "human"})
 
-data["human"] = data.pop(name_human)
 name_human = "human"
+
+# Split data training, testing and validation sets
+df_train, temp  = train_test_split(df, train_size=0.7, shuffle=True, random_state=42)
+df_test, df_val = train_test_split(temp, train_size=0.5, shuffle=True, random_state=42)
+
+# Convert back to dict: 
+data_train = df_train.to_dict("list")
+data_test = df_test.to_dict("list")
+data_val = df_val.to_dict("list")
 
 # word2idx mapping: 
 word2idx = np.load(word_to_idx, allow_pickle=True).item()
@@ -203,36 +232,41 @@ word2idx = np.load(word_to_idx, allow_pickle=True).item()
 # ============================================================================================================
 
 # Generate tokens and clean sentence: 
-data["adult_sent"] = [clean_string(i)[0] for i in data[name_human]]
-data["adult_token"] = [clean_string(i)[1] for i in data[name_human]]
+data_train = add_sent_token(data_train)
+data_test = add_sent_token(data_test)
+data_val = add_sent_token(data_val)
 
-data["proposals_sent"] = [clean_string(i)[0] for i in data[name_mc]]
-data["proposals_token"] = [clean_string(i)[1] for i in data[name_mc]]
-
-filenames = data["Images"]
 name_idx = ["adult_token", "proposals_token"]
 
+#####################
+# Train: 
+filenames_train = data_train["Images"]
+features_train = add_features(filenames_train, data_train["Image_features"]) 
 
-img_feat = []
-for i, filename in enumerate(filenames): 
-    img_feat.append([filename, data["Image_features"][i]])
-features = dict(img_feat)
+prep_data_train = prep_caption_feat(filenames_train, data_train, name_idx)
+data_ready_train = gen_new_data(filenames_train, prep_data_train, word2idx, features_train)
 
-# Prep caption: 
-prep_data = prep_caption_feat(filenames, data, name_idx)
-data_ready = gen_new_data(filenames, prep_data, word2idx, features)
+#####################
+# Test
+filenames_test = data_test["Images"]
+features_test = add_features(filenames_test, data_test["Image_features"]) 
+
+prep_data_test = prep_caption_feat(filenames_test, data_test, name_idx)
+data_ready_test = gen_new_data(filenames_test, prep_data_test, word2idx, features_test)
+
+#####################
+# Validation
+filenames_val = data_val["Images"]
+features_val = add_features(filenames_val, data_val["Image_features"]) 
+
+prep_data_val = prep_caption_feat(filenames_val, data_val, name_idx)
+data_ready_val = gen_new_data(filenames_val, prep_data_val, word2idx, features_val)
 
 
 # ============================================================================================================
 print("[INFO] Saving ...")
-np.save(os.path.join(output_path, 'data_train_full.npy'), data_ready)
-np.save(os.path.join(output_path, 'data_val_full.npy'),   data_ready)
-np.save(os.path.join(output_path, 'data_test_full.npy'),  data_ready)
+np.save(os.path.join(output_path, 'data_train_full.npy'), data_ready_train)
+np.save(os.path.join(output_path, 'data_test_full.npy'),  data_ready_test)
+np.save(os.path.join(output_path, 'data_val_full.npy'),   data_ready_val)
 print("[INFO] Done")
-# DO IT AT THE DATAFRAME: 
-# Train, test, val: 
-# idx_train = random.sample(range(len(data_ready["file_names"])), int(len(data_ready["file_names"])*0.8))
-# idx_test = range(len(data_ready["file_names"]))- idx_train
-
-# samples_no = range(len(data_ready["file_names"]))
 

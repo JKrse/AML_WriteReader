@@ -290,7 +290,7 @@ def train(sess, model, data, gen_model, epoch, dim_feat=2048, config=Config(), v
     if batch_size * epoch_size < len(idx):
         epoch_size += 1
         idx.extend(idx[:batch_size * epoch_size - len(idx)])
-    print(epoch_size)
+    print(f"Epoch size (amount of batch steps for 1 epoch): {epoch_size}")
 
     negative_samples_idx = []
     pathological_transf_idx = []
@@ -316,8 +316,8 @@ def train(sess, model, data, gen_model, epoch, dim_feat=2048, config=Config(), v
     if not "mc_samples" in data['captions']['dis'][filename[0]]:
         mc_sample = False
 
-    # for i in range(epoch_size): 
-    for i in range(300): # CHANGE
+    for i in range(epoch_size): 
+    # for i in range(300): # CHANGE
         if i == epoch_size - 1:
             idx_batch = idx[batch_size*i:]
         else:

@@ -24,7 +24,7 @@ class Config(object):
     num_steps = 15
     hidden_size = 512
     dropout_prob = 0.5
-    batch_size = 100
+    batch_size = 16
     vocab_size = 10004
     embedding_size = 300
     num_input = 2
