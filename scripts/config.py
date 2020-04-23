@@ -24,7 +24,7 @@ class Config(object):
     num_steps = 15
     hidden_size = 512
     dropout_prob = 0.5
-    batch_size = 16
+    batch_size = 32
     vocab_size = 10004
     embedding_size = 300
     num_input = 2
@@ -34,8 +34,7 @@ class Config(object):
     local_path_temp = Path("./../local_files/")
 
 
-
-        # How to use Image Feature :
+    # How to use Image Feature :
     #   None | 'concat_bf_lstm' | 'concat_af_lstm' | 'only_img'
     use_img_feat= 'concat_af_lstm'
 

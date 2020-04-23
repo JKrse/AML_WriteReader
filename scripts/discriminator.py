@@ -398,9 +398,10 @@ def train(sess, model, data, gen_model, epoch, dim_feat=2048, config=Config(), v
                     while rand_j == idx_batch[j]:
                         rand_j = np.random.randint(0,len(filename))
                     fake_cap = copy.deepcopy(data['captions']['dis'][filename[rand_j]]['human'])
-                    # fake_idx = list(range(len(fake_cap)))
-                    # random.shuffle(fake_idx)
-                    # x[j*2+1+len(idx_batch)*num_input, :] = fake_cap[fake_idx[0]]
+                    if len(fake_cap.shape) > 1:
+                        fake_idx = list(range(len(fake_cap)))
+                        random.shuffle(fake_idx)
+                        x[j*2+1+len(idx_batch)*num_input, :] = fake_cap[fake_idx[0]]
                     x[j*2+1+len(idx_batch)*num_input, :] = fake_cap
                 elif rand_ind_2 == 1: # random word replacement of human caption
                     human_cap = copy.deepcopy(
@@ -409,9 +410,10 @@ def train(sess, model, data, gen_model, epoch, dim_feat=2048, config=Config(), v
                     Authers has 5 people annotate each image, hence what they do here is to randomly select one of them
                     We don't have this 
                     """
-                    # human_idx = list(range(len(human_cap)))
-                    # random.shuffle(human_idx)
-                    # human_cap = human_cap[human_idx[0]] # This is for the original
+                    if len(human_cap.shape) > 1:
+                        human_idx = list(range(len(human_cap)))
+                        random.shuffle(human_idx)
+                        human_cap = human_cap[human_idx[0]] # This is for the original
                     if model._eos in list(human_cap):
                         end_position = list(human_cap).index(model._eos)
                     else:
@@ -425,9 +427,10 @@ def train(sess, model, data, gen_model, epoch, dim_feat=2048, config=Config(), v
                 elif rand_ind_2 == 2: # random permutation of human captions
                     human_cap = copy.deepcopy(
                             data['captions']['dis'][filename[idx_batch[j]]]['human'])
-                    # human_idx = list(range(len(human_cap)))
-                    # random.shuffle(human_idx)
-                    # human_cap = human_cap[human_idx[0]]
+                    if len(human_cap.shape) > 1:
+                        human_idx = list(range(len(human_cap)))
+                        random.shuffle(human_idx)
+                        human_cap = human_cap[human_idx[0]]
                     if model._eos in list(human_cap):
                         end_position = list(human_cap).index(model._eos)
                     else:
