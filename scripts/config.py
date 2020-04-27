@@ -15,9 +15,9 @@ class Config(object):
         "concat"      concatenate features directly
     [cls_hidden]   number of hidden layers for classifer (all with size 256)
     """
-    learning_rate = 0.01
+    learning_rate = 0.001
     learning_rate_decay = 0.9
-    max_epoch = 1  # 
+    max_epoch = 12  # 
     grad_clip = 1.0
     num_layers = 1
     num_steps = 15

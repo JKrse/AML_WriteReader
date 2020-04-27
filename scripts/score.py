@@ -75,7 +75,8 @@ def main(_):
             output_filename = '%s.txt' % (args.model_architecture)
             output_filepath = os.path.join(save_path, output_filename)
             f = open(output_filepath, 'w')
-            f.write(f"{test_models[0]} Average Score \t Acc \t {test_models[1]} Average Score \t Acc \n")
+            f.write(f"{test_models[0]} average score\tacc {test_models[0]}\t" 
+                    f"{test_models[1]} average score\tacc {test_models[1]}\n")
 
             # Training
             for i in range(config.max_epoch):
@@ -100,6 +101,8 @@ def main(_):
                 saver.save(sess, model_path, global_step=i+1)
                 print("Model saved to %s." % model_path)
 
-
 if __name__ == "__main__":
     tf.app.run()
+
+
+print("hej")

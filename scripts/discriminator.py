@@ -343,18 +343,29 @@ def train(sess, model, data, gen_model, epoch, dim_feat=2048, config=Config(), v
             """
             curr_img = copy.deepcopy(data['features']['dis'][filename[idx_batch[j]]])
             real_cap = copy.deepcopy(data['captions']['dis'][filename[idx_batch[j]]]['human'])
-            real_idx = list(range(len(real_cap)))
-            random.shuffle(real_idx)
             # 1st pair: (real0, real1)
-            x[j*2, :]   = real_cap[real_idx[0]]
+            if len(real_cap.shape) > 1:
+                real_idx = list(range(len(real_cap)))
+                random.shuffle(real_idx)
+                x[j*2, :]   = real_cap[real_idx[0]]
+            else: 
+                x[j*2, :]   = real_cap
             img[j*2,:]  = curr_img
 
-            x[j*2+len(idx_batch)*num_input, :]   = real_cap[real_idx[1]]
+            if len(real_cap.shape) > 1:
+                x[j*2+len(idx_batch)*num_input, :]   = real_cap[real_idx[1]]
+            else:
+                x[j*2+len(idx_batch)*num_input, :] = real_cap
+            
             img[j*2+len(idx_batch)*num_input, :] = curr_img
             y_[j*2, 0] = 1.0
 
             # 2nd pair: (real0, fake), fake is sampled from (gen, random_human, random_word)
-            x[j*2+1, :]  = real_cap[real_idx[0]]
+            if len(real_cap.shape) > 1:
+                x[j*2+1, :]  = real_cap[real_idx[0]]
+            else: 
+                x[j*2+1, :]  = real_cap
+            
             img[j*2+1,:] = curr_img
             y_[j*2+1, 1] = 1.0
 
@@ -400,7 +411,8 @@ def train(sess, model, data, gen_model, epoch, dim_feat=2048, config=Config(), v
                         fake_idx = list(range(len(fake_cap)))
                         random.shuffle(fake_idx)
                         x[j*2+1+len(idx_batch)*num_input, :] = fake_cap[fake_idx[0]]
-                    x[j*2+1+len(idx_batch)*num_input, :] = fake_cap
+                    else:
+                        x[j*2+1+len(idx_batch)*num_input, :] = fake_cap
                 elif rand_ind_2 == 1: # random word replacement of human caption
                     human_cap = copy.deepcopy(
                             data['captions']['dis'][filename[idx_batch[j]]]['human'])
@@ -497,12 +509,19 @@ def inference(sess, model, data, gen_model, dim_feat=2048, config=Config()):
             img_feat = copy.deepcopy(data['features']['dis'][filename[idx_batch[j]]])
             real_cap = copy.deepcopy(data['captions']['dis'][filename[idx_batch[j]]]['human'])
             real_idx = list(range(len(real_cap)))
-            random.shuffle(real_idx)
-            x[j, :] = real_cap[real_idx[0]]
+
+            if len(real_cap.shape) > 1:
+                random.shuffle(real_idx)
+                x[j, :] = real_cap[real_idx[0]]
+            else: 
+                x[j, :] = real_cap
             img[j,:] = img_feat
 
             if gen_model == 'human':
-                x[j+len(idx_batch), :] = real_cap[real_idx[1]]
+                if len(real_cap.shape) > 1:
+                    x[j+len(idx_batch), :] = real_cap[real_idx[1]]
+                else: # ** THIS IS THE ONE APPLICABLE **
+                    x[j+len(idx_batch), :] = real_cap
                 y_[j, 0] = 1.
                 y_[j, 1] = 0.
             elif gen_model == 'random_human':
@@ -510,9 +529,12 @@ def inference(sess, model, data, gen_model, dim_feat=2048, config=Config()):
                 while rand_j == idx_batch[j]:
                     rand_j = random.randint(0,len(filename)-1)
                 fake_cap = copy.deepcopy(data['captions']['dis'][filename[rand_j]]['human'])
-                fake_idx = list(range(len(fake_cap)))
-                random.shuffle(fake_idx)
-                x[j+len(idx_batch), :] = fake_cap[fake_idx[0]]
+                if len(fake_cap.shape) > 1:
+                    fake_idx = list(range(len(fake_cap)))
+                    random.shuffle(fake_idx)
+                    x[j+len(idx_batch), :] = fake_cap[fake_idx[0]]
+                else:
+                    x[j+len(idx_batch), :] = fake_cap
             elif gen_model == 'random_word':
                 x[j+len(idx_batch), :] = np.random.randint(
                         config.vocab_size-4, size=(num_steps,)) + 4
