@@ -290,6 +290,7 @@ def train(sess, model, data, gen_model, epoch, dim_feat=2048, config=Config(), v
     if batch_size * epoch_size < len(idx):
         epoch_size += 1
         idx.extend(idx[:batch_size * epoch_size - len(idx)])
+    
     print(f"Epoch size (amount of batch steps for 1 epoch): {epoch_size}")
 
     negative_samples_idx = []
@@ -347,9 +348,6 @@ def train(sess, model, data, gen_model, epoch, dim_feat=2048, config=Config(), v
             # 1st pair: (real0, real1)
             x[j*2, :]   = real_cap[real_idx[0]]
             img[j*2,:]  = curr_img
-
-            # if j % 25 == 0:
-            #     print(f"Inner loop:{idx_batch}")
 
             x[j*2+len(idx_batch)*num_input, :]   = real_cap[real_idx[1]]
             img[j*2+len(idx_batch)*num_input, :] = curr_img

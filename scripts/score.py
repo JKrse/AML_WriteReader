@@ -75,10 +75,11 @@ def main(_):
             output_filename = '%s.txt' % (args.model_architecture)
             output_filepath = os.path.join(save_path, output_filename)
             f = open(output_filepath, 'w')
+            f.write(f"{test_models[0]} Average Score \t Acc \t {test_models[1]} Average Score \t Acc \n")
 
             # Training
             for i in range(config.max_epoch):
-                print("Epoch: %d" % (i + 1))
+                print(f"Epoch: {i + 1} out of {config.max_epoch}")
                 train_loss, train_acc = train(sess, mtrain, data_train,
                                               gen_model=train_models, epoch=i,
                                               config=config)
