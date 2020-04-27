@@ -4,8 +4,6 @@ from pathlib import Path
 from config import *
 import argparse
 import pandas as pd
-
-import numpy as np
 import os
 # ============================================================================================================
 
@@ -22,9 +20,6 @@ parser.add_argument(
 parser.add_argument(
         '--model_architecture', type=str, default="mlp_1_img_1_512_0",
         help='Name of model architecture used')
-parser.add_argument(
-        '--output_path', type=str, default=f"{Config.local_path}/data",
-        help='Path to the to the output files')
 
 
 args = parser.parse_args()
@@ -32,8 +27,8 @@ args = parser.parse_args()
 # ============================================================================================================
 
 
-def plot(x, y, x_label=None, y_label=None, img_title=None, save_plt=False, img_name=None, fontsize=16):
-    plt.figure()
+def plot(x, y, x_label=None, y_label=None, img_title=None, save_plt=False, img_name=None, fontsize=16, fig_no=None):
+    plt.figure(fig_no)
     fig = plt.plot(x, y)
     plt.xlabel(x_label, fontsize=fontsize)
     plt.ylabel(y_label, fontsize=fontsize)
@@ -42,7 +37,7 @@ def plot(x, y, x_label=None, y_label=None, img_title=None, save_plt=False, img_n
     plt.title(img_title, fontsize=(fontsize+2))
     plt.tight_layout()
     if save_plt: 
-        plt.savefig(f"{path_image}/{img_name}", dpi=1200)
+        plt.savefig(f"{output_path}/{img_name}", dpi=1200)
     plt.show(fig)
 
 
@@ -51,13 +46,18 @@ def plot(x, y, x_label=None, y_label=None, img_title=None, save_plt=False, img_n
 local_path = Config.local_path
 name = args.name
 model_architecture = args.model_architecture
+Config.local_path_temp
 
 # ============================================================================================================
 
 exp_name = f"{name}_scoring"
 txt_file = f"{local_path}/{exp_name}/{model_architecture}.txt"
+output_path = f"{local_path}/figures"
 
-data = pd.read_csv(txt_file, sep="\\t")
+if not os.path.exists(output_path): 
+    os.mkdir(output_path)
+
+data = pd.read_csv(txt_file, sep="\\t", engine='python')
 
 # ============================================================================================================
 
@@ -76,8 +76,10 @@ for i, col in enumerate(data.columns):
     plt.xticks(x, fontsize=(fontsize-2))
     plt.yticks(fontsize=(fontsize-2))
     plt.tight_layout() 
+plt.show()
 
 # Single plots: 
 for i, col in enumerate(data.columns):
-    plot(x=range(len(data[col])), y=data[col], y_label="Accurcy", x_label="Epoch", img_title=f"{col}")
+    plot(x=range(len(data[col])), y=data[col], y_label="Accurcy", x_label="Epoch", 
+        img_title=f"{col}", fig_no=(i+1))
 
