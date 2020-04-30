@@ -37,7 +37,7 @@ Downloading and performing feature extraction for all images takes quite a lot o
 pip install fasttext
 ```
 
-Download the pre-trained fastText "da" model and the binary file: https://fasttext.cc/docs/en/pretrained-vectors.html (bin+text).
+Download the pre-trained fastText "da" model and the binary file: https://fasttext.cc/docs/en/pretrained-vectors.html (bin+text) and put the folder in local_files.
 
 3. Generate vocabulrary
 ```
