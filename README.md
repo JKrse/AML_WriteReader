@@ -26,7 +26,7 @@ The project uses different data source provided by WriteReaders. The objective i
 
 1. To generate the folder structure for this project: 
 ```
-python config.py
+python scripts/config.py
 ```
 
 Downloading and performing feature extraction for all images takes quite a lot of time 2-3 hours. Hence, to ease this process we recommend downloading preprocessed dataset (LINK). To do it manully find the instructions further down. 
