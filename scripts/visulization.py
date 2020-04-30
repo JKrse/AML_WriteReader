@@ -79,7 +79,7 @@ for i, col in enumerate(data.columns):
 plt.show()
 
 # Single plots: 
-for i, col in enumerate(data.columns):
-    plot(x=range(len(data[col])), y=data[col], y_label="Accurcy", x_label="Epoch", 
-        img_title=f"{col}", fig_no=(i+1))
+# for i, col in enumerate(data.columns):
+#     plot(x=range(len(data[col])), y=data[col], y_label="Accurcy", x_label="Epoch", 
+#         img_title=f"{col}", fig_no=(i+1))
 
