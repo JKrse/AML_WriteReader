@@ -17,7 +17,7 @@ class Config(object):
     [cls_hidden]   number of hidden layers for classifer (all with size 256)
     """
     #learning_rate = 0.00001
-    learning_rate = random.expovariate(1000)
+    learning_rate = random.expovariate(10000)
     learning_rate_decay = 0.9
     max_epoch = 12 #
     grad_clip = 1.0
