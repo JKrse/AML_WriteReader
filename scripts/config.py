@@ -26,7 +26,7 @@ class Config(object):
     num_steps = 15
     hidden_size = 512
     #dropout_prob = 0.1
-    dropout_prob = random.random()
+    dropout_prob = random.uniform(0.05, 0.5)
     batch_size = 32
     vocab_size = 10004
     embedding_size = 300
