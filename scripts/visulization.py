@@ -5,11 +5,14 @@ from config import *
 import argparse
 import pandas as pd
 import os
+import glob
 # ============================================================================================================
 
 local_path = Config.local_path_temp
 name = "proposals"
-model_architecture = "mlp_1_img_1_512_0"
+save_plt = True
+show_plt = False
+# model_architecture = "mlp_1_img_1_512_0"
 
 # ============================================================================================================
 
@@ -17,10 +20,15 @@ parser = argparse.ArgumentParser(description='Generate visualizations')
 parser.add_argument(
         '--name', type=str, default="proposals",
         help='Name of the method used')
+# parser.add_argument(
+#         '--model_architecture', type=str, default="mlp_1_img_1_512_0",
+#         help='Name of model architecture used')
 parser.add_argument(
-        '--model_architecture', type=str, default="mlp_1_img_1_512_0",
-        help='Name of model architecture used')
-
+        '--show_plt', type=str, default=False,
+        help='Whether to show the figure')
+parser.add_argument(
+        '--save_plt', type=str, default=False,
+        help='Whether to save the figures')
 
 args = parser.parse_args()
 
@@ -45,38 +53,49 @@ def plot(x, y, x_label=None, y_label=None, img_title=None, save_plt=False, img_n
 
 local_path = Config.local_path
 name = args.name
-model_architecture = args.model_architecture
+save_plt = args.save_plt
+show_plt = args.show_plt
+# model_architecture = args.model_architecture
 Config.local_path_temp
 
 # ============================================================================================================
 
 exp_name = f"{name}_scoring"
-txt_file = f"{local_path}/{exp_name}/{model_architecture}.txt"
+# txt_file = f"{local_path}/{exp_name}/{model_architecture}.txt"
+txt_file = f"{local_path}/{exp_name}/*.txt"
 output_path = f"{local_path}/figures"
 
 if not os.path.exists(output_path): 
     os.mkdir(output_path)
 
-data = pd.read_csv(txt_file, sep="\\t", engine='python')
 
-# ============================================================================================================
+models = glob.glob(f"{txt_file}")
 
 colors = ['red', 'black', 'blue', 'brown', 'green']
 fontsize = 14
 
-# Subplots: 
-for i, col in enumerate(data.columns):
-    x,y = range(len(data[col])), data[col]
-    plt.subplot(2,2,(i+1))
-    plt.plot(x,y, c=colors[i])
+for model in models: 
+    data = pd.read_csv(model, sep="\\t", engine='python')   
 
-    plt.title(col, fontsize=fontsize)
-    plt.xlabel("Epoch", fontsize=fontsize)
-    plt.ylabel("Accurcy", fontsize=fontsize)
-    plt.xticks(x, fontsize=(fontsize-2))
-    plt.yticks(fontsize=(fontsize-2))
-    plt.tight_layout() 
-plt.show()
+    # Subplots: 
+    for i, col in enumerate(data.columns):
+        x,y = range(len(data[col])), data[col]
+        plt.subplot(2,2,(i+1))
+        plt.plot(x,y, c=colors[i])
+
+        plt.title(col, fontsize=fontsize)
+        plt.xlabel("Epoch", fontsize=fontsize)
+        plt.ylabel("Accurcy", fontsize=fontsize)
+        plt.xticks(x, fontsize=(fontsize-2))
+        plt.yticks(fontsize=(fontsize-2))
+        plt.tight_layout() 
+    if save_plt:
+        model_name = os.path.splitext(os.path.split(model)[1])[0]
+        plt.savefig(f"{output_path}/{model_name}.png", dpi=600)
+    if show_plt:
+        plt.show()
+    else:
+        plt.close()
 
 # Single plots: 
 # for i, col in enumerate(data.columns):

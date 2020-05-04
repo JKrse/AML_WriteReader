@@ -71,10 +71,12 @@ def main(_):
             tf.global_variables_initializer().run()
             summary_writer = tf.summary.FileWriter(log_path, graph=tf.get_default_graph())
             saver = tf.train.Saver()
-
-            output_filename = '%s.txt' % (args.model_architecture)
+            
+            # model_architecture / num_layers / dropout_prob / batch_size / use_lstm
+            output_filename = f"model_{args.model_architecture}__lr{config.learning_rate}__lay{config.num_layers}__dp{config.dropout_prob}__bs{config.batch_size}__lstm{config.use_lstm}.txt"
             output_filepath = os.path.join(save_path, output_filename)
             f = open(output_filepath, 'w')
+            # Column names:
             f.write(f"{test_models[0]} average score\tacc {test_models[0]}\t" 
                     f"{test_models[1]} average score\tacc {test_models[1]}\n")
 
