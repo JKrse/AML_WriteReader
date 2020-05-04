@@ -16,8 +16,13 @@ class Config(object):
         "concat"      concatenate features directly
     [cls_hidden]   number of hidden layers for classifer (all with size 256)
     """
+<<<<<<< HEAD
     learning_rate = 0.00001
     # learning_rate = random.expovariate(10000)
+=======
+    #learning_rate = 0.00001
+    learning_rate = random.expovariate(10000)
+>>>>>>> d5e271c1c4e6883755e3df907bd7e92c16e4a196
     learning_rate_decay = 0.9
     max_epoch = 2 #
     grad_clip = 1.0
@@ -25,8 +30,13 @@ class Config(object):
     # num_layers = random.randint(1, 3)
     num_steps = 15
     hidden_size = 512
+<<<<<<< HEAD
     dropout_prob = 0.1
     # dropout_prob = random.random()
+=======
+    #dropout_prob = 0.1
+    dropout_prob = random.uniform(0.05, 0.5)
+>>>>>>> d5e271c1c4e6883755e3df907bd7e92c16e4a196
     batch_size = 32
     vocab_size = 6004
     embedding_size = 300
