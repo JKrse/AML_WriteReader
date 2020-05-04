@@ -8,10 +8,10 @@ import os
 import glob
 # ============================================================================================================
 
-local_path = Config.local_path_temp
-name = "proposals"
-save_plt = True
-show_plt = False
+# local_path = Config.local_path_temp
+# name = "proposals"
+# save_plt = True
+# show_plt = False
 # model_architecture = "mlp_1_img_1_512_0"
 
 # ============================================================================================================

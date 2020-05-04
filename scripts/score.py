@@ -41,13 +41,13 @@ def main(_):
     train_models = [args.name]
     test_models = [args.name, 'human']
 
-    [data_train, data_val, data_test, word_embedding] = data_loader(
-            data_path, use_mc_samples=False)
-    word_to_idx = data_train['word_to_idx']
-
     config = Config()
     config = config_model_coco(config, args.model_architecture)
     config.max_epoch = args.epochs
+
+    [data_train, data_val, data_test, word_embedding] = data_loader(
+            data_path, use_mc_samples=False)
+    word_to_idx = data_train[f'word_to_idx']
 
     print("Model architecture:%s"%(args.model_architecture))
     with tf.Graph().as_default():
@@ -73,7 +73,7 @@ def main(_):
             saver = tf.train.Saver()
             
             # model_architecture / num_layers / dropout_prob / batch_size / use_lstm
-            output_filename = f"model_{args.model_architecture}__lr{config.learning_rate}__lay{config.num_layers}__dp{config.dropout_prob}__bs{config.batch_size}__lstm{config.use_lstm}.txt"
+            output_filename = f"vocab{config.vocab_size}__model_{args.model_architecture}__lr{config.learning_rate}__lay{config.num_layers}__dp{config.dropout_prob}__bs{config.batch_size}__lstm{config.use_lstm}.txt"
             output_filepath = os.path.join(save_path, output_filename)
             f = open(output_filepath, 'w')
             # Column names:

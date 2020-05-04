@@ -30,7 +30,7 @@ parser.add_argument(
         '--image_feat', type=str, default=f"{Config.local_path}/data/image_features.npz",
         help='Path to the image features.')
 parser.add_argument(
-        '--word-to-idx', type=str, default=f"{Config.local_path}/data/word_to_idx.npy",
+        '--word-to-idx', type=str, default=f"{Config.local_path}/data/word_to_idx_{Config.vocab_size}.npy",
         help='Path to the npy file that contains mapping from word to index.')
 parser.add_argument(
         '--output_path', type=str, default=f"{Config.local_path}/data",
@@ -265,8 +265,8 @@ data_ready_val = gen_new_data(filenames_val, prep_data_val, word2idx, features_v
 
 # ============================================================================================================
 print("[INFO] Saving ...")
-np.save(os.path.join(output_path, 'data_train_full.npy'), data_ready_train)
-np.save(os.path.join(output_path, 'data_test_full.npy'),  data_ready_test)
-np.save(os.path.join(output_path, 'data_val_full.npy'),   data_ready_val)
+np.save(os.path.join(output_path, f"data_train_full_{Config.vocab_size}.npy"), data_ready_train)
+np.save(os.path.join(output_path, f"data_test_full_{Config.vocab_size}.npy"),  data_ready_test)
+np.save(os.path.join(output_path, f"data_val_full_{Config.vocab_size}.npy"),   data_ready_val)
 print("[INFO] Done")
 

@@ -15,8 +15,6 @@ import fasttext
 # output_path =f"{Config.local_path_temp}/data"
 # model = "wiki.da/wiki.da.bin"
 # local_files = Config.local_path_temp
-# # Make own function here: 
-# vocab = np.load(f_vocab)["vocab"]
 
 # ============================================================================================================
 
@@ -128,22 +126,23 @@ data = np.load(f_name)
 sorted_dict = np.load(f_vocab)["vocab"]
 
 # Without frequency: 
-write_word_10k = []
-write_word_10k.append('<pad>') # Padding 
-write_word_10k.append('<unk>') # Unknown
-write_word_10k.append('<sos>') # Start of sentence
-write_word_10k.append('<eos>') # End of sentence
+write_word = []
+write_word.append('<pad>') # Padding 
+write_word.append('<unk>') # Unknown
+write_word.append('<sos>') # Start of sentence
+write_word.append('<eos>') # End of sentence
 
-for i in range(Config.vocab_size):
-    write_word_10k.append(sorted_dict[i][0])
+
+for i in range(Config.vocab_size-4):
+    write_word.append(sorted_dict[i][0])
     if (i+1) == len(sorted_dict):
         break
 
-print(f"Vocabulary length: {len(write_word_10k)}")
+print(f"Vocabulary length: {len(write_word)}")
 
 # Making a mapping for a word to a index 
 word_to_idx = {}
-for i, word in enumerate(write_word_10k):
+for i, word in enumerate(write_word):
     word_to_idx[word] = i
 # Making a reverse mapping, from index to a word
 idx_to_word = {i: w for w, i in word_to_idx.items()}
@@ -160,21 +159,21 @@ model = fasttext.load_model(dir_model)
 print("[INFO] Done loading model")
 
 # Embed the vocabulary: 
-word_embedding_300, word_embedding_300_dict = word_embedding(write_word_10k, model)
+word_embedding_300, word_embedding_300_dict = word_embedding(write_word, model)
 
 # ============================================================================================================
 print("[INFO] Saving ...")
 ###### Save data ######
 
 # Saving the word to index mapping 
-np.save(os.path.join(output_path, 'word_to_idx.npy'),  word_to_idx)
+np.save(os.path.join(output_path, f"word_to_idx_{Config.vocab_size}.npy"),  word_to_idx)
 
 # Saving the embedding matrix: 
-np.save(os.path.join(output_path, 'word_embedding_300.npy'), word_embedding_300)
+np.save(os.path.join(output_path, f"word_embedding_300_{Config.vocab_size}.npy"), word_embedding_300)
 
 # Vocabulary and embeddings: 
 f = open(f"{output_path}/fasttext.txt","w")
-f.write( str(word_embedding_300_dict) )
+f.write( str(word_embedding_300_dict) ) 
 f.close()
 
 print("[INFO] Done")

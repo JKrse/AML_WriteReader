@@ -89,9 +89,9 @@ def data_loader(data_path=None, data_type = '_full', use_mc_samples=False, load_
                 (to be loaded when needed)
     'word_to_idx': a dict with word to idx mapping
     """
-    data_train = np.load(os.path.join(data_path, "data_train_full.npy", ), allow_pickle=True).item()
-    data_val = np.load(os.path.join(data_path, "data_val_full.npy"), allow_pickle=True).item()
-    data_test = np.load(os.path.join(data_path, "data_test_full.npy"), allow_pickle=True).item()
+    data_train = np.load(os.path.join(data_path, f"data_train_full_{Config.vocab_size}.npy", ), allow_pickle=True).item()
+    data_val = np.load(os.path.join(data_path, f"data_val_full_{Config.vocab_size}.npy"), allow_pickle=True).item()
+    data_test = np.load(os.path.join(data_path, f"data_test_full_{Config.vocab_size}.npy"), allow_pickle=True).item()
     if use_mc_samples == True:
         mc_train = np.load(os.path.join(data_path, 'dumped_train.npy'), allow_pickle=True).item()
         mc_val = np.load(os.path.join(data_path, 'dumped_val.npy'), allow_pickle=True).item()
@@ -109,7 +109,7 @@ def data_loader(data_path=None, data_type = '_full', use_mc_samples=False, load_
                 f'{Config.local_path}/data/resnet152/feature_dis_test%s.npy' % (data_type), encoding = 'latin1', allow_pickle=True).item()
 
     word_embedding = np.load(
-            f'{Config.local_path}/data/word_embedding_%s.npy' % (str(Config().embedding_size)), allow_pickle=True)
+            f'{Config.local_path}/data/word_embedding_{str(Config().embedding_size)}_{str(Config().vocab_size)}.npy', allow_pickle=True)
 
     return [data_train, data_val, data_test, word_embedding]
 
