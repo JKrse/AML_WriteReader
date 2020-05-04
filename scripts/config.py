@@ -32,7 +32,7 @@ class Config(object):
 
     # Utilize random search: 
     random_search = True
-    random_search_int = 2
+    random_search_int = 5
 
     local_path = Path("./local_files/")
     local_path_temp = Path("./../local_files/")

@@ -47,9 +47,9 @@ def main(_):
 
     if config.random_search:
         # Parameters investigated using Random Search
-        config.learning_rate = random.expovariate(10000)
+        config.learning_rate = np.round(random.expovariate(10000),10)
         config.num_layers = random.randint(1, 3)
-        config.dropout_prob = random.uniform(0.05, 0.5)
+        config.dropout_prob = np.round(random.uniform(0.05, 0.5),2)
         config.vocab_size = random.choice([3004, 5004, 10004])
         
 
