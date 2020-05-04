@@ -116,6 +116,7 @@ def main(_):
 
 if Config.random_search: 
     for i in range(Config.random_search_int):
+        print(f"Loop {i} out of {Config.random_search_int}")
         if __name__ == "__main__":
             tf.app.run()
 else:

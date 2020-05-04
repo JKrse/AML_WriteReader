@@ -34,6 +34,7 @@ class Config(object):
     random_search = True
     random_search_int = 5
 
+    # Path for terminal / debugging locally
     local_path = Path("./local_files/")
     local_path_temp = Path("./../local_files/")
 
