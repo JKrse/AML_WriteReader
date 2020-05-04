@@ -45,6 +45,14 @@ def main(_):
     config = config_model_coco(config, args.model_architecture)
     config.max_epoch = args.epochs
 
+    if config.random_search:
+        # Parameters investigated using Random Search
+        config.learning_rate = random.expovariate(10000)
+        config.num_layers = random.randint(1, 3)
+        config.dropout_prob = random.uniform(0.05, 0.5)
+        config.vocab_size = random.choice([3004, 5004, 10004])
+        
+
     [data_train, data_val, data_test, word_embedding] = data_loader(
             data_path, use_mc_samples=False)
     word_to_idx = data_train[f'word_to_idx']
@@ -103,8 +111,13 @@ def main(_):
                 saver.save(sess, model_path, global_step=i+1)
                 print("Model saved to %s." % model_path)
 
-if __name__ == "__main__":
-    tf.app.run()
 
 
-print("hej")
+
+if Config.random_search: 
+    for i in range(Config.random_search_int):
+        if __name__ == "__main__":
+            tf.app.run()
+else:
+    if __name__ == "__main__":
+        tf.app.run()

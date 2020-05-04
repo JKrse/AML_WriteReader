@@ -16,23 +16,23 @@ class Config(object):
         "concat"      concatenate features directly
     [cls_hidden]   number of hidden layers for classifer (all with size 256)
     """
-    # learning_rate = 0.00001
-    learning_rate = random.expovariate(10000)
+    learning_rate = 0.00001
     learning_rate_decay = 0.9
-    max_epoch = 2 #
+    max_epoch = 10 #
     grad_clip = 1.0
-    # num_layers = 1
-    num_layers = random.randint(1, 3)
+    num_layers = 1
     num_steps = 15
     hidden_size = 512
     dropout_prob = 0.1
-    #dropout_prob = 0.1
-    dropout_prob = random.uniform(0.05, 0.5)
     batch_size = 32
-    vocab_size = random.choice([3004, 5004, 10004])
+    vocab_size = 10004
     embedding_size = 300
     num_input = 2
     use_lstm  = True
+
+    # Utilize random search: 
+    random_search = True
+    random_search_int = 2
 
     local_path = Path("./local_files/")
     local_path_temp = Path("./../local_files/")
