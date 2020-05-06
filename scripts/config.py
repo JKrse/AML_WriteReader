@@ -34,7 +34,11 @@ class Config(object):
 
     # Resize training data:
     resize_data = False
+<<<<<<< HEAD
     resize_samples = 800
+=======
+    resize_samples = 1200
+>>>>>>> 3d1bf24b7e7e35a93411109816fda6d1be5947ec
 
     # Path for terminal / debugging locally
     local_path = Path("./local_files/")
