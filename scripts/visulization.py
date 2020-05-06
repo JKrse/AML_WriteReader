@@ -126,7 +126,7 @@ for model in models:
             plt.plot(x, y2, c=colors[i+1])
             plt.plot(x_new, y3, c=colors[i+2])
 
-            plt.legend(["Human", "Prop", "Train"], loc="upper left")
+            plt.legend(["Prop", "Human", "Train"], loc="upper left")
 
             plt.title("Accuracy", fontsize=fontsize)
             plt.xlabel("Epoch", fontsize=fontsize)
