@@ -495,13 +495,20 @@ def train(sess, model, data, gen_model, epoch, dim_feat=2048, config=Config(), v
         loss = vals["loss"]
         accuracy = vals["accuracy"]
 
-        if verbose and (i % (epoch_size // 10) == 10 or i == epoch_size - 1):
-            print("%d / %d loss: %.4f accuracy: %.3f speed: %.3f wps" %
-                (i + 1, epoch_size, loss, accuracy,
-                i * 1.0 * batch_size * num_steps / (time.time() - start_time)))
-
-            loss_total.append(loss)
-            accuracy_total.append(accuracy)
+        if Config.resize_data:
+            if verbose and (i % (epoch_size // 10) == 0 or i == epoch_size - 1):
+                print("%d / %d loss: %.4f accuracy: %.3f speed: %.3f wps" %
+                    (i + 1, epoch_size, loss, accuracy,
+                    i * 1.0 * batch_size * num_steps / (time.time() - start_time)))
+                loss_total.append(loss)
+                accuracy_total.append(accuracy)
+        else:
+            if verbose and (i % (epoch_size // 10) == 10 or i == epoch_size - 1):
+                print("%d / %d loss: %.4f accuracy: %.3f speed: %.3f wps" %
+                    (i + 1, epoch_size, loss, accuracy,
+                    i * 1.0 * batch_size * num_steps / (time.time() - start_time)))
+                loss_total.append(loss)
+                accuracy_total.append(accuracy)
 
     return loss_total, accuracy_total
 
