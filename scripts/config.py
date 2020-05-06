@@ -17,7 +17,7 @@ class Config(object):
     """
     learning_rate = 0.0008
     learning_rate_decay = 0.9
-    max_epoch = 2 #
+    max_epoch = 60 #
     grad_clip = 1.0
     num_layers = 1
     num_steps = 15
@@ -30,11 +30,11 @@ class Config(object):
     use_lstm  = True
 
     # Utilize random search: 
-    random_search = True
+    random_search = False
 
     # Resize training data:
-    resize_data = True
-    resize_samples = 1200
+    resize_data = False
+    resize_samples = 800
 
     # Path for terminal / debugging locally
     local_path = Path("./local_files/")
