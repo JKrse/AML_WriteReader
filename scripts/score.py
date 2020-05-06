@@ -88,7 +88,8 @@ def main(_):
             
             # model_architecture / num_layers / dropout_prob / batch_size / use_lstm
             output_filename = f"vocab{config.vocab_size}__model_{args.model_architecture}__lr{config.learning_rate}__" \
-                f"lay{config.num_layers}__dp{config.dropout_prob}__bs{config.batch_size}__lstm{config.use_lstm}.txt"
+                f"lay{config.num_layers}__dp{config.dropout_prob}__bs{config.batch_size}__lstm{config.use_lstm}" \
+                f"__ts{config.resize_samples}.txt"
 
             output_filename_train = f"vocab{config.vocab_size}__model_{args.model_architecture}__lr{config.learning_rate}__" \
                 f"lay{config.num_layers}__dp{config.dropout_prob}__bs{config.batch_size}__lstm{config.use_lstm}_train.txt"
