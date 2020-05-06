@@ -89,7 +89,7 @@ def data_loader(data_path=None, data_type = '_full', use_mc_samples=False, load_
                 (to be loaded when needed)
     'word_to_idx': a dict with word to idx mapping
     """
-    data_train = np.load(os.path.join(data_path, f"data_train_full_{Config.vocab_size}.npy", ), allow_pickle=True).item()
+    data_train = np.load(os.path.join(data_path, f"data_train_full_{Config.vocab_size}.npy"), allow_pickle=True).item()
     data_val = np.load(os.path.join(data_path, f"data_val_full_{Config.vocab_size}.npy"), allow_pickle=True).item()
     data_test = np.load(os.path.join(data_path, f"data_test_full_{Config.vocab_size}.npy"), allow_pickle=True).item()
     if use_mc_samples == True:
@@ -112,6 +112,31 @@ def data_loader(data_path=None, data_type = '_full', use_mc_samples=False, load_
             f'{Config.local_path}/data/word_embedding_{str(Config().embedding_size)}_{str(Config().vocab_size)}.npy', allow_pickle=True)
 
     return [data_train, data_val, data_test, word_embedding]
+
+
+def resize_data(dict_data, data_size=None): 
+    """
+    Helper function to decrease samples used in an attempt to overfit
+    
+    dict_data 
+        dictionary data
+    data_size
+        The number of samples wanted 
+    """
+    if len(dict_data["file_names"]) < data_size or not isinstance(data_size, int):
+        print(f"Data has {len(dict_data['file_names'])}")
+        data_size = len(dict_data["file_names"])
+    
+    data = {}
+    data["file_names"] = dict_data["file_names"][0:data_size]
+    data["image_idxs"] = dict_data["image_idxs"][0:data_size]
+    data["word_to_idx"] = dict(list(dict_data["word_to_idx"].items())[0:data_size])
+    data["captions"] = {}
+    data["captions"]["gen"] = dict_data["captions"]["gen"][0:data_size]
+    data["captions"]["dis"] = dict(list(dict_data["captions"]["dis"].items())[0:data_size])
+    data["features"] = {}
+    data["features"]["dis"] = dict(list(dict_data["features"]["dis"].items())[0:data_size])
+    return data
 
 
 class Discriminator(object):
@@ -467,10 +492,16 @@ def train(sess, model, data, gen_model, epoch, dim_feat=2048, config=Config(), v
         loss = vals["loss"]
         accuracy = vals["accuracy"]
 
-        if verbose and (i % (epoch_size // 10) == 10 or i == epoch_size - 1):
-            print("%d / %d loss: %.4f accuracy: %.3f speed: %.3f wps" %
-                (i + 1, epoch_size, loss, accuracy,
-                i * 1.0 * batch_size * num_steps / (time.time() - start_time)))
+        if Config.resize_data:
+            if verbose and (i % (epoch_size // 10) == 0 or i == epoch_size - 1):
+                print("%d / %d loss: %.4f accuracy: %.3f speed: %.3f wps" %
+                    (i + 1, epoch_size, loss, accuracy,
+                    i * 1.0 * batch_size * num_steps / (time.time() - start_time)))
+        else:
+            if verbose and (i % (epoch_size // 10) == 10 or i == epoch_size - 1):
+                print("%d / %d loss: %.4f accuracy: %.3f speed: %.3f wps" %
+                    (i + 1, epoch_size, loss, accuracy,
+                    i * 1.0 * batch_size * num_steps / (time.time() - start_time)))
 
     return loss, accuracy
 

@@ -47,7 +47,7 @@ def main(_):
 
     if config.random_search:
         # Parameters investigated using Random Search
-        config.learning_rate = np.round(random.expovariate(10000),10)
+        config.learning_rate = np.round(random.expovariate(100000),10)
         config.num_layers = random.randint(1, 3)
         config.dropout_prob = np.round(random.uniform(0.05, 0.5),2)
         config.vocab_size = random.choice([3004, 5004, 10004])
@@ -56,6 +56,9 @@ def main(_):
     [data_train, data_val, data_test, word_embedding] = data_loader(
             data_path, use_mc_samples=False)
     word_to_idx = data_train[f'word_to_idx']
+
+    if resize_data: 
+        data_train = resize_data(data_train, config.resize_samples)
 
     print("Model architecture:%s"%(args.model_architecture))
     with tf.Graph().as_default():
@@ -81,7 +84,8 @@ def main(_):
             saver = tf.train.Saver()
             
             # model_architecture / num_layers / dropout_prob / batch_size / use_lstm
-            output_filename = f"vocab{config.vocab_size}__model_{args.model_architecture}__lr{config.learning_rate}__lay{config.num_layers}__dp{config.dropout_prob}__bs{config.batch_size}__lstm{config.use_lstm}.txt"
+            output_filename = f"vocab{config.vocab_size}__model_{args.model_architecture}__lr{config.learning_rate}__lay{config.num_layers} \
+                                    __dp{config.dropout_prob}__bs{config.batch_size}__lstm{config.use_lstm}__trauin.txt"
             output_filepath = os.path.join(save_path, output_filename)
             f = open(output_filepath, 'w')
             # Column names:
@@ -112,13 +116,5 @@ def main(_):
                 print("Model saved to %s." % model_path)
 
 
-
-
-if Config.random_search: 
-    for i in range(Config.random_search_int):
-        print(f"Loop {i} out of {Config.random_search_int}")
-        if __name__ == "__main__":
-            tf.app.run()
-else:
-    if __name__ == "__main__":
-        tf.app.run()
+if __name__ == "__main__":
+    tf.app.run()

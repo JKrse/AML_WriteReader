@@ -32,7 +32,10 @@ class Config(object):
 
     # Utilize random search: 
     random_search = True
-    random_search_int = 5
+
+    # Resize training data: 
+    resize_data = True
+    resize_samples = 1200
 
     # Path for terminal / debugging locally
     local_path = Path("./local_files/")
