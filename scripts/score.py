@@ -60,7 +60,7 @@ def main(_):
             data_path, use_mc_samples=False)
     word_to_idx = data_train[f'word_to_idx']
 
-    if resize_data:
+    if config.resize_data:
         data_train = resize_data(data_train, config.resize_samples)
 
     print("Model architecture:%s"%(args.model_architecture))

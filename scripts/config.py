@@ -30,10 +30,10 @@ class Config(object):
     use_lstm  = True
 
     # Utilize random search: 
-    random_search = True
+    random_search = False
 
     # Resize training data:
-    resize_data = True
+    resize_data = False
     resize_samples = 1200
 
     # Path for terminal / debugging locally
