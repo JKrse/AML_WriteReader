@@ -29,9 +29,12 @@ class Config(object):
     num_input = 2
     use_lstm  = True
 
-    # Utilize random search:
-    random_search = False
-    random_search_int = 5
+    # Utilize random search: 
+    random_search = True
+
+    # Resize training data:
+    resize_data = True
+    resize_samples = 1200
 
     # Path for terminal / debugging locally
     local_path = Path("./local_files/")
