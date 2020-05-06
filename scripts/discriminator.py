@@ -317,6 +317,9 @@ def train(sess, model, data, gen_model, epoch, dim_feat=2048, config=Config(), v
     if not "mc_samples" in data['captions']['dis'][filename[0]]:
         mc_sample = False
 
+    loss_total = []
+    accuracy_total = []
+
     for i in range(epoch_size): 
     # for i in range(300): # CHANGE
         if i == epoch_size - 1:
@@ -472,7 +475,10 @@ def train(sess, model, data, gen_model, epoch, dim_feat=2048, config=Config(), v
                 (i + 1, epoch_size, loss, accuracy,
                 i * 1.0 * batch_size * num_steps / (time.time() - start_time)))
 
-    return loss, accuracy
+            loss_total.append(loss)
+            accuracy_total.append(accuracy)
+
+    return loss_total, accuracy_total
 
 
 def inference(sess, model, data, gen_model, dim_feat=2048, config=Config()):

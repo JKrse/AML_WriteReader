@@ -56,39 +56,60 @@ name = args.name
 save_plt = args.save_plt
 show_plt = args.show_plt
 # model_architecture = args.model_architecture
-Config.local_path_temp
 
 # ============================================================================================================
 
 exp_name = f"{name}_scoring"
 # txt_file = f"{local_path}/{exp_name}/{model_architecture}.txt"
 txt_file = f"{local_path}/{exp_name}/*.txt"
+txt_file_train = f"{local_path}/{exp_name}/train/*.txt"
 output_path = f"{local_path}/figures"
 
 if not os.path.exists(output_path): 
     os.mkdir(output_path)
 
-
 models = glob.glob(f"{txt_file}")
+trains = glob.glob(f"{txt_file_train}")
 
 colors = ['red', 'black', 'blue', 'brown', 'green']
 fontsize = 14
 
 for model in models: 
-    data = pd.read_csv(model, sep="\\t", engine='python')   
+    data = pd.read_csv(model, sep="\\t", engine='python')
+    cols = data.columns
+    data = data[[cols[0], cols[2], cols[1], cols[3]]]
 
     # Subplots: 
-    for i, col in enumerate(data.columns):
-        x,y = range(len(data[col])), data[col]
-        plt.subplot(2,2,(i+1))
-        plt.plot(x,y, c=colors[i])
+    for i in range(3):
+        grid = plt.GridSpec(2, 2, wspace=0.4, hspace=0.4)
+        if i < 2:
+            x,y = range(len(data.iloc[:,i])), data.iloc[:,i]
+            plt.subplot(grid[0, i])
+            plt.plot(x,y, c=colors[i])
 
-        plt.title(col, fontsize=fontsize)
-        plt.xlabel("Epoch", fontsize=fontsize)
-        plt.ylabel("Accurcy", fontsize=fontsize)
-        plt.xticks(x, fontsize=(fontsize-2))
-        plt.yticks(fontsize=(fontsize-2))
-        plt.tight_layout() 
+            plt.title(data.columns[i], fontsize=fontsize)
+            plt.xlabel("Epoch", fontsize=fontsize)
+            plt.ylabel("Accuracy", fontsize=fontsize)
+            plt.xticks(x, fontsize=(fontsize-2))
+            plt.yticks(fontsize=(fontsize-2))
+            plt.tight_layout()
+        if i == 2:
+            x, y1 = range(len(data.iloc[:, i])), data.iloc[:, i]
+            y2 = data.iloc[:, i+1]
+
+            plt.subplot(grid[1,:])
+            plt.plot(x, y1, c=colors[i])
+            plt.plot(x, y2, c=colors[i+1])
+
+            plt.legend(["Human", "Pro"], loc="upper left")
+
+            plt.title("Error Rate", fontsize=fontsize)
+            plt.xlabel("Epoch", fontsize=fontsize)
+            plt.ylabel("Accuracy", fontsize=fontsize)
+            plt.xticks(x, fontsize=(fontsize - 2))
+            plt.yticks(fontsize=(fontsize - 2))
+            plt.tight_layout()
+
     if save_plt:
         model_name = os.path.splitext(os.path.split(model)[1])[0]
         plt.savefig(f"{output_path}/{model_name}.png", dpi=600)

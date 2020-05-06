@@ -30,6 +30,7 @@ def main(_):
     log_path = local_files / exp_name
     save_path = local_files / exp_name
     data_path = os.path.join(args.data_path, args.name)
+    save_path_train = f"{local_files}/{exp_name}/train"
 
     if not os.path.exists(local_files):
         os.makedirs(local_files)
@@ -37,6 +38,8 @@ def main(_):
         os.makedirs(log_path)
     if not os.path.exists(save_path):
         os.makedirs(save_path)
+    if not os.path.exists(save_path_train):
+        os.mkdir(save_path_train)
 
     train_models = [args.name]
     test_models = [args.name, 'human']
@@ -81,12 +84,21 @@ def main(_):
             saver = tf.train.Saver()
             
             # model_architecture / num_layers / dropout_prob / batch_size / use_lstm
-            output_filename = f"vocab{config.vocab_size}__model_{args.model_architecture}__lr{config.learning_rate}__lay{config.num_layers}__dp{config.dropout_prob}__bs{config.batch_size}__lstm{config.use_lstm}.txt"
+            output_filename = f"vocab{config.vocab_size}__model_{args.model_architecture}__lr{config.learning_rate}__" \
+                f"lay{config.num_layers}__dp{config.dropout_prob}__bs{config.batch_size}__lstm{config.use_lstm}.txt"
+
+            output_filename_train = f"vocab{config.vocab_size}__model_{args.model_architecture}__lr{config.learning_rate}__" \
+                f"lay{config.num_layers}__dp{config.dropout_prob}__bs{config.batch_size}__lstm{config.use_lstm}_train.txt"
+
             output_filepath = os.path.join(save_path, output_filename)
+            output_filepath_train = os.path.join(save_path_train, output_filename_train)
             f = open(output_filepath, 'w')
+            f_train = open(output_filepath_train, 'w')
             # Column names:
             f.write(f"{test_models[0]} average score\tacc {test_models[0]}\t" 
                     f"{test_models[1]} average score\tacc {test_models[1]}\n")
+
+            f_train.write("Epoch\t Loss\t Accuracy\n")
 
             # Training
             for i in range(config.max_epoch):
@@ -94,6 +106,11 @@ def main(_):
                 train_loss, train_acc = train(sess, mtrain, data_train,
                                               gen_model=train_models, epoch=i,
                                               config=config)
+
+                for k_item in range(len(train_loss)):
+                    f_train.write(f"{i} \t")
+                    f_train.write(f"{train_loss[k_item]} \t")
+                    f_train.write(f"{train_acc[k_item]} \n")
 
                 for test_model in test_models:
                     [acc, logits, scores] = inference(
@@ -104,6 +121,8 @@ def main(_):
                     f.write("%f\t" % a)
                 f.write("\n")
             f.close()
+            f_train.close()
+
 
             if save_path:
                 model_path = os.path.join(save_path, args.model_architecture)

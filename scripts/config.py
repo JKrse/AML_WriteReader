@@ -1,7 +1,6 @@
 
 from pathlib import Path 
 import os
-import random
 
 
 class Config(object):
@@ -16,22 +15,22 @@ class Config(object):
         "concat"      concatenate features directly
     [cls_hidden]   number of hidden layers for classifer (all with size 256)
     """
-    learning_rate = 0.00001
+    learning_rate = 0.0008
     learning_rate_decay = 0.9
-    max_epoch = 10 #
+    max_epoch = 2 #
     grad_clip = 1.0
     num_layers = 1
     num_steps = 15
     hidden_size = 512
-    dropout_prob = 0.1
+    dropout_prob = 0.6
     batch_size = 32
     vocab_size = 10004
     embedding_size = 300
     num_input = 2
     use_lstm  = True
 
-    # Utilize random search: 
-    random_search = True
+    # Utilize random search:
+    random_search = False
     random_search_int = 5
 
     # Path for terminal / debugging locally
