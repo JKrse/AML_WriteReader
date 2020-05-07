@@ -17,12 +17,12 @@ class Config(object):
     """
     learning_rate = 0.0008
     learning_rate_decay = 0.9
-    max_epoch = 2 #
+    max_epoch = 30 #
     grad_clip = 1.0
     num_layers = 1
     num_steps = 15
     hidden_size = 512
-    dropout_prob = 0.6
+    dropout_prob = 0.59
     batch_size = 32
     vocab_size = 10004
     embedding_size = 300

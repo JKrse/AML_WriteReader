@@ -92,7 +92,8 @@ def main(_):
                 f"__ts{config.resize_samples}.txt"
 
             output_filename_train = f"vocab{config.vocab_size}__model_{args.model_architecture}__lr{config.learning_rate}__" \
-                f"lay{config.num_layers}__dp{config.dropout_prob}__bs{config.batch_size}__lstm{config.use_lstm}_train.txt"
+                f"lay{config.num_layers}__dp{config.dropout_prob}__bs{config.batch_size}__lstm{config.use_lstm}" \
+                f"__ts{config.resize_samples}_train.txt"
 
             output_filepath = os.path.join(save_path, output_filename)
             output_filepath_train = os.path.join(save_path_train, output_filename_train)
