@@ -8,6 +8,7 @@ import os
 import glob
 import numpy as np
 import re
+from sklearn import metrics
 # ============================================================================================================
 
 # local_path = Config.local_path_temp
@@ -143,8 +144,26 @@ for model in models:
         plt.close()
 
     # Generating ROC
-    TP =
-    plt.figure()
+    ytrue1 = np.ones(len(data))
+    ytrue0 = np.zeros(len(data))
+    ytrue = pd.DataFrame(np.concatenate([ytrue1, ytrue0], axis = 0))
+    yprobs = pd.concat([data[cols[2]], 1 - data[cols[0]]], axis=0)
+
+    fpr, tpr, _ = metrics.roc_curve(ytrue, yprobs)
+    auc = metrics.auc(fpr, tpr)
+
+    plt.plot(fpr, tpr)
+    plt.xlabel("False Positive Rate")
+    plt.ylabel("True Positive Rate")
+    plt.title(f"ROC with AUC: {auc:.2f}")
+
+    if save_plt:
+        plt.savefig(f"{output_path}/{model_name}_ROC.png", dpi=600)
+    if show_plt:
+        plt.show()
+    else:
+        plt.close()
+
 
 
 # Single plots: 
