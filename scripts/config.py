@@ -17,12 +17,12 @@ class Config(object):
     """
     learning_rate = 0.0008
     learning_rate_decay = 0.9
-    max_epoch = 30 #
+    max_epoch = 2 #
     grad_clip = 1.0
     num_layers = 1
     num_steps = 15
     hidden_size = 512
-    dropout_prob = 0.59
+    dropout_prob = 0.6
     batch_size = 32
     vocab_size = 10004
     embedding_size = 300
@@ -33,8 +33,8 @@ class Config(object):
     random_search = False
 
     # Resize training data:
-    resize_data = True
-    resize_samples = 800
+    resize_data = False
+    resize_samples = 1200
 
     # Path for terminal / debugging locally
     local_path = Path("./local_files/")

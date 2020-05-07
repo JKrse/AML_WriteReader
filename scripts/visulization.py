@@ -142,6 +142,11 @@ for model in models:
     else:
         plt.close()
 
+    # Generating ROC
+    TP =
+    plt.figure()
+
+
 # Single plots: 
 # for i, col in enumerate(data.columns):
 #     plot(x=range(len(data[col])), y=data[col], y_label="Accurcy", x_label="Epoch", 
