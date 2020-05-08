@@ -8,19 +8,36 @@ from config import *
 import numpy as np
 
 # ============================================================================================================
+config = Config()
+
+# # For debug: " 
+f_name = "data/test_data.npz"
+url_name = "ImageUrl"
+local_files = config.local_path_temp
+test = True
+
 #Define the argument parser to read in the URL
 parser = argparse.ArgumentParser()
-parser.add_argument('--fname', default="data/proposals2.npz", help='File with image links')
-parser.add_argument('--url_name', type=str, default="url", help='Name of the title for the URL')
-args = vars(parser.parse_args())
+parser.add_argument('--fname', default="data/proposals2.npz", 
+                    help='File with image links')
+parser.add_argument('--url_name', type=str, default="url", 
+                    help='Name of the title for the URL')
+parser.add_argument('--test', type=bool, default=False)
+args = parser.parse_args()
+
+f_name = args.fname
+url_name = args.url_name
+local_files = config.local_path
+test = args.test
 
 
-f_name = args['fname']
-url_name = args['url_name']
+if test == "True":
+    test = True
+elif test == "False":
+    test = False
+else:
+    print("test has to be 'True' or 'False'")
 
-# # For debug: 
-# f_name = "data/proposals2.npz"
-# url_name = "url"
 
 # ============================================================================================================
 
@@ -40,18 +57,18 @@ def image_name(url):
 
 # ============================================================================================================
 
-# Generate all folders needed: 
-local_files = Config.local_path
-
 # Create the directory name where the images will be saved
-dir_img = local_files / "images"
+if test:
+    dir_img = local_files / "images_test"
+else:
+    dir_img = local_files / "images"
 # Create the directory if already not there
 if not os.path.exists(dir_img):
     os.mkdir(dir_img)
 
 # Load data: 
 dir_data = local_files / f_name
-data = np.load(dir_data, encoding="latin1")
+data = np.load(dir_data, encoding="latin1", allow_pickle=True)
 
 # ============================================================================================================
 links = data[url_name]
@@ -66,4 +83,4 @@ for i, img in enumerate(links):
     if i % 50 == 0: 
         print(f"[INFO] Downloaded {i} of {len(links)} images.")
 
-print(f"[INFO] Downloaded {i+1} of {len(links)} images.")
+print(f"[INFO] Downloaded {i+1-len(error_img)} of {len(links)} images.")

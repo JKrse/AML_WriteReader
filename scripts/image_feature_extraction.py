@@ -8,13 +8,22 @@ import argparse
 # from keras.datasets import cifar10 # (x_train, y_train), (x_test, y_test) = cifar10.load_data()
 
 # ============================================================================================================
-local_path = Config.local_path
+
+config = Config()
+local_path = config.local_path_temp # Manully debug
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--fname', default=f"./{local_path}/images", help='Path to folder(s) with images')
-args = vars(parser.parse_args())
+parser.add_argument('--fname', default=f"images", 
+                    help='Path to folder(s) with images')
+parser.add_argument('--output_file', default=f"image_features", 
+                    help='Naming the outfile')
+args = parser.parse_args()
 
-f_name = args['fname']
+local_path = config.local_path
+f_name = args.fname
+output_file = args.output_file
+
+# python scripts/image_feature_extraction.py --fname "images_test" --output_file "image_features_test"
 
 # ============================================================================================================
 
@@ -25,8 +34,7 @@ model = keras.applications.resnet.ResNet152(include_top=False, weights='imagenet
 
 # ============================================================================================================
 
-# rootdir = f"{Config.local_path_temp}/images"
-rootdir = f_name
+rootdir = local_path / f_name
 
 img_name = []
 img_feat = []
@@ -57,5 +65,5 @@ for dirpath, dirnames, filenames in os.walk(rootdir):
 img_feat_dict = {"Images": img_name, "Image_features": img_feat}
 
 # Saving Data: 
-print(f"[INFO] Saving: {local_path}/data/image_features.npz")
-np.savez(f"{local_path}/data/image_features.npz",**img_feat_dict)
+print(f"[INFO] Saving: {local_path}/data/{output_file}.npz")
+np.savez(f"{local_path}/data/{output_file}.npz",**img_feat_dict)
