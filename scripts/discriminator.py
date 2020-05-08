@@ -143,10 +143,10 @@ class Discriminator(object):
     """The model."""
     def __init__(self, word_embedding, word_to_idx=None, use_glove=True,
                  is_training=True, dim_feat=2048, config=Config(), num_input=2):
-        self.x        = tf.placeholder(tf.int32, [None, config.num_steps])
-        self.y_       = tf.placeholder(tf.float32, [None, 2])
-        self.img_feat = tf.placeholder(tf.float32, [None, dim_feat])
-        self.lr       = tf.placeholder(tf.float32)
+        self.x        = tf.placeholder(tf.int32, [None, config.num_steps], name="x")
+        self.y_       = tf.placeholder(tf.float32, [None, 2], name = "y_")
+        self.img_feat = tf.placeholder(tf.float32, [None, dim_feat], name = "img_feat")
+        self.lr       = tf.placeholder(tf.float32, name = "lr")
         self._eos = word_to_idx['<eos>']
         mask = tf.to_float(tf.equal(self.x, self._eos))
 

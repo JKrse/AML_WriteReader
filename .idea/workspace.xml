@@ -4,7 +4,8 @@
     <list default="true" id="b266a46e-e80a-4b3f-9a7e-23ccfdf62180" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/visulization.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/visulization.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/discriminator.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/discriminator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/generate_exampletexts.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/generate_exampletexts.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,8 +18,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scripts/config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="40" column="14" selection-start-line="40" selection-start-column="14" selection-end-line="40" selection-end-column="14" />
+            <state relative-caret-position="194">
+              <caret line="23" column="18" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
               <folding>
                 <element signature="e#1#25#0" expanded="true" />
               </folding>
@@ -26,11 +27,30 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/scripts/image_feature_extraction.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-34" />
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/scripts/generate_exampletexts.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="362">
+              <caret line="55" lean-forward="true" selection-start-line="55" selection-end-line="55" />
+              <folding>
+                <element signature="e#112#135#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scripts/visulization.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="124">
-              <caret line="77" selection-start-line="77" selection-end-line="77" />
+            <state relative-caret-position="236">
+              <caret line="164" column="19" selection-start-line="164" selection-start-column="19" selection-end-line="164" selection-end-column="19" />
               <folding>
                 <element signature="e#111#142#0" expanded="true" />
               </folding>
@@ -41,8 +61,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scripts/score.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="690">
-              <caret line="60" column="23" selection-start-line="60" selection-start-column="23" selection-end-line="60" selection-end-column="23" />
+            <state relative-caret-position="-1449">
+              <caret line="16" column="63" lean-forward="true" selection-start-line="16" selection-start-column="63" selection-end-line="16" selection-end-column="63" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -53,8 +73,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scripts/discriminator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7305">
-              <caret line="503" column="43" selection-start-line="503" selection-start-column="43" selection-end-line="503" selection-end-column="43" />
+            <state relative-caret-position="76">
+              <caret line="287" column="22" lean-forward="true" selection-start-line="287" selection-start-column="22" selection-end-line="287" selection-end-column="22" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -67,6 +87,10 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>proposals_scoring</find>
+      <find>Variable</find>
+      <find>beta</find>
+      <find>get_variable</find>
+      <find>y_</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -77,9 +101,10 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/scripts/score.py" />
+        <option value="$PROJECT_DIR$/scripts/visulization.py" />
         <option value="$PROJECT_DIR$/scripts/discriminator.py" />
         <option value="$PROJECT_DIR$/scripts/config.py" />
-        <option value="$PROJECT_DIR$/scripts/visulization.py" />
+        <option value="$PROJECT_DIR$/scripts/generate_exampletexts.py" />
       </list>
     </option>
   </component>
@@ -114,6 +139,25 @@
               <item name="WriteReader" type="b2602c69:ProjectViewProjectNode" />
               <item name="WriteReader" type="462c0819:PsiDirectoryNode" />
               <item name="local_files" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WriteReader" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WriteReader" type="462c0819:PsiDirectoryNode" />
+              <item name="local_files" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WriteReader" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WriteReader" type="462c0819:PsiDirectoryNode" />
+              <item name="local_files" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+              <item name="proposals" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WriteReader" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WriteReader" type="462c0819:PsiDirectoryNode" />
+              <item name="local_files" type="462c0819:PsiDirectoryNode" />
+              <item name="proposals_scoring" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="WriteReader" type="b2602c69:ProjectViewProjectNode" />
@@ -202,14 +246,22 @@
       <option name="project" value="LOCAL" />
       <updated>1588769451587</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="ROC plot tilføjet">
+      <created>1588863438989</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1588863438990</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="32809000" />
+    <option name="totallyTimeSpent" value="43777000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="953" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13308914" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -226,7 +278,7 @@
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.40998837" />
-      <window_info active="true" anchor="bottom" id="Python Console" order="12" visible="true" weight="0.42624855" />
+      <window_info active="true" anchor="bottom" id="Python Console" order="12" visible="true" weight="0.37979093" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -241,18 +293,54 @@
     <MESSAGE value="Random choice of parameters" />
     <MESSAGE value="Tilføjet plot og fil for train" />
     <MESSAGE value="Plot færdiggjort" />
-    <option name="LAST_COMMIT_MESSAGE" value="Plot færdiggjort" />
+    <MESSAGE value="ROC plot tilføjet" />
+    <option name="LAST_COMMIT_MESSAGE" value="ROC plot tilføjet" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/scripts/prep_submission.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1825" />
+        <state relative-caret-position="-322" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/prep_vocab.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2389" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/image_scraper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-266" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/image_feature_extraction.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-34" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/visulization.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="164" column="19" selection-start-line="164" selection-start-column="19" selection-end-line="164" selection-end-column="19" />
+          <folding>
+            <element signature="e#111#142#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="23" column="18" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
+          <folding>
+            <element signature="e#1#25#0" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/score.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="690">
-          <caret line="60" column="23" selection-start-line="60" selection-start-column="23" selection-end-line="60" selection-end-column="23" />
+        <state relative-caret-position="-1449">
+          <caret line="16" column="63" lean-forward="true" selection-start-line="16" selection-start-column="63" selection-end-line="16" selection-end-column="63" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>
@@ -261,30 +349,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/discriminator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7305">
-          <caret line="503" column="43" selection-start-line="503" selection-start-column="43" selection-end-line="503" selection-end-column="43" />
+        <state relative-caret-position="76">
+          <caret line="287" column="22" lean-forward="true" selection-start-line="287" selection-start-column="22" selection-end-line="287" selection-end-column="22" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/config.py">
+    <entry file="file://$PROJECT_DIR$/scripts/generate_exampletexts.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="40" column="14" selection-start-line="40" selection-start-column="14" selection-end-line="40" selection-end-column="14" />
+        <state relative-caret-position="362">
+          <caret line="55" lean-forward="true" selection-start-line="55" selection-end-line="55" />
           <folding>
-            <element signature="e#1#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/visulization.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
-          <caret line="77" selection-start-line="77" selection-end-line="77" />
-          <folding>
-            <element signature="e#111#142#0" expanded="true" />
+            <element signature="e#112#135#0" expanded="true" />
           </folding>
         </state>
       </provider>
