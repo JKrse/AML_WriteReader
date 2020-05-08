@@ -8,6 +8,7 @@ import numpy as np
 import tensorflow as tf
 import os
 import random
+import pandas as pd
 import copy
 
 from tensorflow.python.util import nest
@@ -31,6 +32,7 @@ def main(_):
     save_path = local_files / exp_name
     data_path = os.path.join(args.data_path, args.name)
     save_path_train = f"{local_files}/{exp_name}/train"
+    save_path_test = f"{local_files}/{exp_name}/test"
 
     if not os.path.exists(local_files):
         os.makedirs(local_files)
@@ -40,6 +42,8 @@ def main(_):
         os.makedirs(save_path)
     if not os.path.exists(save_path_train):
         os.mkdir(save_path_train)
+    if not os.path.exists(save_path_test):
+        os.mkdir(save_path_test)
 
     train_models = [args.name]
     test_models = [args.name, 'human']
@@ -95,8 +99,14 @@ def main(_):
                 f"lay{config.num_layers}__dp{config.dropout_prob}__bs{config.batch_size}__lstm{config.use_lstm}" \
                 f"__ts{config.resize_samples}_train.txt"
 
+            output_filename_test = f"vocab{config.vocab_size}__model_{args.model_architecture}__lr{config.learning_rate}__" \
+                f"lay{config.num_layers}__dp{config.dropout_prob}__bs{config.batch_size}__lstm{config.use_lstm}" \
+                f"__ts{config.resize_samples}_testresults.txt"
+
             output_filepath = os.path.join(save_path, output_filename)
             output_filepath_train = os.path.join(save_path_train, output_filename_train)
+            output_filepath_test = os.path.join(save_path_test, output_filename_test)
+
             f = open(output_filepath, 'w')
             f_train = open(output_filepath_train, 'w')
             # Column names:
@@ -104,6 +114,10 @@ def main(_):
                     f"{test_models[1]} average score\tacc {test_models[1]}\n")
 
             f_train.write("Epoch\t Loss\t Accuracy\n")
+
+            score_list = []
+            idx_batch_list = []
+            cat_list = []
 
             # Training
             for i in range(config.max_epoch):
@@ -118,15 +132,34 @@ def main(_):
                     f_train.write(f"{train_acc[k_item]} \n")
 
                 for test_model in test_models:
-                    [acc, logits, scores] = inference(
+                    [acc, logits, scores, idx_batch] = inference(
                             sess, mval, data_val, test_model, config=config)
                     s = np.mean(scores[:,:,0])
                     f.write("%f\t" % s)
                     a = np.mean(acc) # Average Score: 
                     f.write("%f\t" % a)
+
+                    if i == config.max_epoch - 1:
+
+                        if test_model == "human":
+                            cat_list += list(np.ones(len(idx_batch)))
+                        elif test_model == args.name:
+                            cat_list += list(np.zeros(len(idx_batch)))
+
+                        score_list += scores[:,:,0].tolist()
+                        idx_batch_list += idx_batch.tolist()
+
                 f.write("\n")
+
+            all_test = pd.DataFrame()
+            all_test["idx_batch"] = idx_batch_list
+            all_test["cat"] = cat_list
+            all_test["score"] = score_list
+            all_test.to_csv(output_filepath_test, sep="\t", header=True)
+
             f.close()
             f_train.close()
+
 
 
             if save_path:
