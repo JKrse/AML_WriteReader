@@ -43,7 +43,7 @@ local_files = Config.local_path
 # ============================================================================================================
 
 
-def clean_string(txt, lower_all=True, punctuation=True): 
+def clean_string(txt, lower_all=True, punctuation=True): ## NOT USED
     """
     Pre-process string by cleaning the input text. Output the input string and the tokenized form. 
     
@@ -70,7 +70,7 @@ def clean_string(txt, lower_all=True, punctuation=True):
 
 
 # Generate vocabulary and a frequency count for each word based on textural data: 
-def vocabulary_gen(txt_data):
+def vocabulary_gen(txt_data): ## NOT USED 
     """
     txt_data
         Arrays of every sentence

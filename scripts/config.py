@@ -72,8 +72,8 @@ def environment_setup():
     if not os.path.exists(Config.local_path / "images"):
         os.makedirs(Config.local_path / "images")
 
-if not os.path.exists(Config.local_path):
-    environment_setup()
+# if not os.path.exists(Config.local_path):
+#     environment_setup()
 
 
 

@@ -49,6 +49,15 @@ python scripts/prep_vocab.py --model "wiki.da/wiki.da.bin"
 python scripts/image_scraper.py --fname "data/proposals2.npz" --url_name "url"
 ```
 
+To download the test images first convert tsv file to npz and remove all samples without a BadProposal: 
+```
+python scripts/test_data_prep.py 
+```
+Then download: 
+```
+python scripts/image_scraper.py --fname "data/test_data.npz" --url_name "ImageUrl" --test "True"
+```
+
 This process can easily take an hour. For the 5k sample size we experinced an error for 10 of the urls. Since this is a significantly small amount of images, these samples will simple be removed at a later state (```prep_submission.py```). 
 
 Having all the images downloaded the next step is to perfom feature extraction for each image. 
@@ -64,8 +73,14 @@ python scripts/image_feature_extraction.py --fname "./local_files/images"
 ## Evaluation
 
 1. Prepare the data
+Prepare the training data
 ```
 python scripts/prep_submission.py --name_human "adult_texts" --name_mc "proposals"
+```
+
+Prepare the test data
+```
+python scripts/prep_submission.py --data "test_data.npz" --image_feat "image_features_test.npz" --url_name "ImageUrl" --name_human "AdultText" --name_mc "Text Proposal" --train_test_val_split "False" --single_name "test" --scoring_proposal "BadProposal"
 ```
 
 Note that we assume you've followed through the steps in the *Preparation* section before running this command. This script will create a folder `data/proposals` and three ```.npy``` files that contain data needed for training the metric. Please use the following command to train the metric:
