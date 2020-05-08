@@ -15,7 +15,7 @@ parser.add_argument(
         '--name', type=str, default="proposals",
         help='Name of the method used')
 parser.add_argument(
-        '--threshold', type=float, default=0.6,
+        '--threshold', type=float, default=0.5,
         help='threshold for when model is confused')
 # parser.add_argument(
 #         '--model_architecture', type=str, default="mlp_1_img_1_512_0",
