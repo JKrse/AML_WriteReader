@@ -42,6 +42,14 @@ models = glob.glob(f"{txt_file}")
 
 threshold = args.threshold
 
+[data_train, data_val, _, _] = data_loader(
+            data_path, use_mc_samples=False)
+
+word_to_idx = data_train[f'word_to_idx']
+idx_to_word = dict((v, k) for k, v in word_to_idx.items())
+
+filename = data_val['file_names']
+
 for model in models:
     test_results = pd.read_csv(model, sep="\t", engine='python')
 
@@ -63,15 +71,6 @@ for model in models:
 
     mc = data[data["cat"] == 0]
     mc_hard = mc[mc["score"] > threshold]["idx"]
-
-
-    [data_train, data_val, data_test, word_embedding] = data_loader(
-            data_path, use_mc_samples=False)
-
-    word_to_idx = data_train[f'word_to_idx']
-    idx_to_word = dict((v, k) for k, v in word_to_idx.items())
-
-    filename = data_val['file_names']
 
     examples = []
 
