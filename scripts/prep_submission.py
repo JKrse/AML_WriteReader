@@ -240,10 +240,10 @@ df_data = pd.DataFrame(data)
 df = pd.merge(df_feat, df_data, how="inner", on="Images")
 
 df = df.rename(columns = {name_human: "human"})
-df = df.rename(columns = {name_mc: "proposal"})
+df = df.rename(columns = {name_mc: "proposals"})
 
 name_human = "human"
-name_mc = 'proposal'
+name_mc = 'proposals'
 
 # Split data training, testing and validation sets
 if train_test_val_split: 

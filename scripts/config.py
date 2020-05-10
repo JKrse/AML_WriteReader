@@ -17,7 +17,7 @@ class Config(object):
     """
     learning_rate = 0.0008
     learning_rate_decay = 0.9
-    max_epoch = 5 #
+    max_epoch = 3 #
     grad_clip = 1.0
     num_layers = 1
     num_steps = 15
@@ -28,6 +28,7 @@ class Config(object):
     embedding_size = 300
     num_input = 2
     use_lstm  = True
+    # 
 
     # Utilize random search: 
     random_search = False
