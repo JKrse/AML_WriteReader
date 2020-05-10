@@ -17,7 +17,11 @@ class Config(object):
     """
     learning_rate = 0.0008
     learning_rate_decay = 0.9
+<<<<<<< HEAD
     max_epoch = 3 #
+=======
+    max_epoch = 10 #
+>>>>>>> 5c766e9fb28e07fe640611519618b3a921528395
     grad_clip = 1.0
     num_layers = 1
     num_steps = 15
@@ -34,7 +38,7 @@ class Config(object):
     random_search = False
 
     # Resize training data:
-    resize_data = True
+    resize_data = False
     resize_samples = 800
 
     # Path for terminal / debugging locally

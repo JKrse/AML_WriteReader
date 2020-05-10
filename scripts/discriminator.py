@@ -525,6 +525,7 @@ def inference(sess, model, data, gen_model, dim_feat=2048, config=Config()):
     acc = []
     logits = []
     scores = []
+    idx_batch_ = []
 
     idx = list(range(len(filename)))
     epoch_size = len(idx) // batch_size
@@ -586,9 +587,10 @@ def inference(sess, model, data, gen_model, dim_feat=2048, config=Config()):
         acc.append(acc_batch)
         logits.append(logits_batch)
         scores.append(scores_batch)
+        idx_batch_.append(idx_batch)
 
     print('%s Average Score: %.3f   Acc: %.3f' \
          % (gen_model, np.mean(np.array(scores)[:,:,0]), np.mean(np.array(acc))))
 
-    return np.array(acc), np.array(logits), np.array(scores)
+    return np.array(acc), np.array(logits), np.array(scores), np.array(idx_batch_)
 
