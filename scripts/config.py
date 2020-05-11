@@ -11,51 +11,45 @@ class Config(object):
         "concat_af_lstm"      concatenate image feature after LSTM
         "only_img"            image feature only
     [combine_typ]  how do we combine context feature with candidate feature
-        "bilinpool"  using binlinear pooling (default)
+        "bilinpool"   using binlinear pooling (default)
         "concat"      concatenate features directly
     [cls_hidden]   number of hidden layers for classifer (all with size 256)
     """
     learning_rate = 0.0008
     learning_rate_decay = 0.9
-<<<<<<< HEAD
-    max_epoch = 3 #
-=======
-    max_epoch = 10 #
->>>>>>> 5c766e9fb28e07fe640611519618b3a921528395
+    max_epoch = 30 #
     grad_clip = 1.0
     num_layers = 1
     num_steps = 15
-    hidden_size = 512
+    # hidden_size = 512 # USES model_architecture
     dropout_prob = 0.6
     batch_size = 32
-    vocab_size = 10004
+    vocab_size = 10001 # 10001: neuraltalk / 10004: proposals
     embedding_size = 300
     num_input = 2
     use_lstm  = True
-    # 
-
-    # Utilize random search: 
-    random_search = False
 
     # Resize training data:
-    resize_data = False
-    resize_samples = 800
+    resize_data = True
+    resize_samples = 4974
+    
+    # Utilize random search: 
+    random_search = False
 
     # Path for terminal / debugging locally
     local_path = Path("./local_files/")
     local_path_temp = Path("./../local_files/")
 
-
     # How to use Image Feature :
     #   None | 'concat_bf_lstm' | 'concat_af_lstm' | 'only_img'
-    use_img_feat= 'concat_af_lstm'
+    # use_img_feat= 'concat_af_lstm' # USES model_architecture
 
     # How to combine context feature:
     #   'bilinpool' | 'concat'
-    combine_typ = 'concat'
+    # combine_typ = 'concat' # USES model_architecture
 
     # 0 for basic linear classifier
-    cls_hidden = 0
+    # cls_hidden = 0 # USES model_architecture
     use_residual         = False # Whether use residual connection in LSTM
     use_random_human     = True  # Whether using random human captions transformations
     use_random_word      = True  # Whether using random word replacement
@@ -83,7 +77,7 @@ def environment_setup():
 
 
 def config_model_coco(config, model_architecture):
-    config.num_layers = 1 # using 1 LSTM layer
+    # config.num_layers = 1 # using 1 LSTM layer # **** THEY ADDED THIS! 
     # Linear models
     if model_architecture == 'concat_no_img_1_512_0':
         config.use_img_feat = None
@@ -130,9 +124,9 @@ def config_model_coco(config, model_architecture):
         config = set_no_da(config)
     # Non-linear models with MLP
     elif model_architecture == 'mlp_1_img_1_512_0':
-        config.use_img_feat = 'concat_af_lstm'
+        config.use_img_feat = 'concat_af_lstm' 
         config.combine_typ = 'concat'
-        config.hidden_size = 512
+        config.hidden_size = 512 # 
         config.cls_hidden = 1
     elif model_architecture == 'mlp_1_no_img_1_512_0':
         config.use_img_feat = None

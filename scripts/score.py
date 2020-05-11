@@ -17,7 +17,7 @@ from config import *
 
 tf.app.flags.DEFINE_string('data_path', f"{Config.local_path}/data",
                            """Path where the data will be loaded.""")
-tf.app.flags.DEFINE_string('name', "proposals", #"mysubmission", # skal lige hardcodes om (sat til neuraltalk for nemhedens skyld)
+tf.app.flags.DEFINE_string('name', "neuraltalk", #"neuraltalk" "proposals", # skal lige hardcodes om (sat til neuraltalk for nemhedens skyld)
                            """Path where the data will be loaded.""")
 tf.app.flags.DEFINE_string('model_architecture', 'mlp_1_img_1_512_0',
                            """Number of images to process in a batch.""")
@@ -55,17 +55,23 @@ def main(_):
     if config.random_search:
         # Parameters investigated using Random Search
         config.learning_rate = np.round(random.expovariate(100000),10)
-        config.num_layers = random.randint(1, 3)
+        config.num_layers = random.randint(1,2,3)
         config.dropout_prob = np.round(random.uniform(0.05, 0.5),2)
         config.vocab_size = random.choice([3004, 5004, 10004])
-        
+    
+    if args.name == "neuraltalk":
+        load_features = True
+    else:
+        load_features = False
 
     [data_train, data_val, data_test, word_embedding] = data_loader(
-            data_path, use_mc_samples=False)
+            data_path, use_mc_samples=False, load_features=load_features)
     word_to_idx = data_train[f'word_to_idx']
 
-    if config.resize_data:
-        data_train = resize_data(data_train, config.resize_samples)
+    # if config.resize_data:
+    #     data_train = resize_data(data_train, config.resize_samples)
+    if not config.resize_data:
+        config.resize_samples = len(data_train["file_names"]) 
 
     print("Model architecture:%s"%(args.model_architecture))
     with tf.Graph().as_default():
