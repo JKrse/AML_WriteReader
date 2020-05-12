@@ -17,7 +17,7 @@ from config import *
 
 tf.app.flags.DEFINE_string('data_path', f"{Config.local_path}/data",
                            """Path where the data will be loaded.""")
-tf.app.flags.DEFINE_string('name', "neuraltalk", #"neuraltalk" "proposals", # skal lige hardcodes om (sat til neuraltalk for nemhedens skyld)
+tf.app.flags.DEFINE_string('name', "proposals", #"neuraltalk" "proposals", # skal lige hardcodes om (sat til neuraltalk for nemhedens skyld)
                            """Path where the data will be loaded.""")
 tf.app.flags.DEFINE_string('model_architecture', 'mlp_1_img_1_512_0',
                            """Number of images to process in a batch.""")

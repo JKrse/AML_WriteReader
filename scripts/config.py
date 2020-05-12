@@ -16,21 +16,21 @@ class Config(object):
     """
     learning_rate = 0.0008
     learning_rate_decay = 0.9
-    max_epoch = 30 #
+    max_epoch = 15 #
     grad_clip = 1.0
     num_layers = 1
     num_steps = 15
     # hidden_size = 512 # USES model_architecture
     dropout_prob = 0.6
     batch_size = 32
-    vocab_size = 10001 # 10001: neuraltalk / 10004: proposals
+    vocab_size = 10004 # 10001: neuraltalk / 10004: proposals
     embedding_size = 300
     num_input = 2
     use_lstm  = True
 
     # Resize training data:
     resize_data = True
-    resize_samples = 4974
+    resize_samples = 1000
 
     # Utilize random search:
     random_search = False
@@ -121,11 +121,7 @@ def config_model_coco(config, model_architecture):
         config = set_no_da(config)
     # Non-linear models with MLP
     elif model_architecture == 'mlp_1_img_1_512_0':
-<<<<<<< HEAD
         config.use_img_feat = 'concat_af_lstm' # only_img / concat_af_lstm (last correct)
-=======
-        config.use_img_feat = 'concat_af_lstm'
->>>>>>> 4ae021bd21690d747474df7df7240c0978a548ce
         config.combine_typ = 'concat'
         config.hidden_size = 512 #
         config.cls_hidden = 1

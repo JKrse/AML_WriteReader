@@ -12,7 +12,14 @@ import matplotlib.pyplot as plt
 from scipy.stats import ttest_ind
 from scipy import stats
 
-# ============================================================================================================
+# ==============================================================================
+
+local_path = Config.local_path_temp
+name = "proposals"
+data_path = f"{local_path}/data/{name}"
+threshold = 0.5
+
+# ==============================================================================
 
 parser = argparse.ArgumentParser(description='Get test results')
 parser.add_argument(
@@ -21,19 +28,19 @@ parser.add_argument(
 parser.add_argument(
         '--threshold', type=float, default=0.5,
         help='threshold for when model is confused')
-# parser.add_argument(
-#         '--model_architecture', type=str, default="mlp_1_img_1_512_0",
-#         help='Name of model architecture used')
 
 args = parser.parse_args()
 
-# ============================================================================================================
+# ==============================================================================
 
 local_path = Config.local_path
 name = args.name
 data_path = f"{local_path}/data/{name}"
+threshold = args.threshold
 
-# ============================================================================================================
+save_fig = True
+
+# ==============================================================================
 exp_name = f"{name}_scoring"
 txt_file = f"{local_path}/{exp_name}/test/*.txt"
 
@@ -44,10 +51,14 @@ if not os.path.exists(output_path):
 
 models = glob.glob(f"{txt_file}")
 
-threshold = args.threshold
-
 [data_train, data_val, _, _] = data_loader(
-     data_path, use_mc_samples=False)
+    data_path, use_mc_samples=False)
+
+train_file = os.path.join(data_path, f"data_train_full_{Config.vocab_size}.npy")
+val_file = os.path.join(data_path, f"data_val_full_{Config.vocab_size}.npy")
+
+data_train = np.load(train_file, allow_pickle=True).item()
+data_val = np.load(val_file, allow_pickle=True).item()
 
 word_to_idx = data_train[f'word_to_idx']
 idx_to_word = dict((v, k) for k, v in word_to_idx.items())
@@ -68,6 +79,15 @@ def get_examples(df, kind, category):
 
     f.close()
 
+
+# ==============================================================================
+
+fontsize = 20
+minus_font = 4
+bins = 40
+quality = 1200
+
+model_name = os.path.splitext(os.path.split(model)[1])[0]
 
 for model in models:
     test_results = pd.read_csv(model, sep="\t", engine='python')
@@ -93,39 +113,62 @@ for model in models:
     mc = data[data["cat"] == 0]
     human = data[data["cat"] == 1]
 
-    plt.figure()
-    sns.distplot(human["score"], hist=True, norm_hist=True)
-    sns.distplot(mc["score"], hist=True, norm_hist=True)
-    plt.legend(["Human", "Proposals"])
-    plt.xlim(0,1)
-    plt.xlabel("Score", fontsize = 10)
-    plt.title("Distribution of scores for the two classes", fontsize = 12)
-    plt.savefig(f"{output_path}/{model_name}_dist.png", dpi = 600)
+    # plt.figure()
+    # sns.distplot(human["score"], hist=True, norm_hist=True)
+    # sns.distplot(mc["score"], hist=True, norm_hist=True)
+    # plt.legend(["Human", "Proposals"])
+    # plt.xlim(0,1)
+    # plt.xlabel("Score", fontsize = 10)
+    # plt.title("Distribution of scores for the two classes", fontsize = 12)
+    # if save_fig: 
+    #     plt.savefig(f"{output_path}/{model_name}_dist.png", dpi = 600)
 
     plt.figure()
-    plt.hist(human["score"], bins = 50, alpha = 0.7)
-    plt.hist(mc["score"], bins = 50, alpha = 0.7)
-    plt.legend(["Human", "Proposals"])
-    plt.xlim(0,1)
-    plt.xlabel("Score", fontsize = 10)
-    plt.title("Distribution of scores for the two classes", fontsize = 12)
-    plt.savefig(f"{output_path}/{model_name}_dist.png", dpi = 600)
+    plt.hist(mc["score"], bins = bins, alpha = 0.7, color="orange")
+    plt.hist(human["score"], bins = bins, alpha = 0.7, color="blue")
+    plt.xlim(0,)
+    plt.legend(["Machine", "Human"], fontsize=fontsize-minus_font)
+    plt.xlabel("Score", fontsize = fontsize-minus_font)
+    plt.ylabel("Count", fontsize = fontsize-minus_font)
+    plt.title("Distribution of scores for the two classes", fontsize = fontsize)
+            
+    plt.xticks(fontsize=(fontsize-minus_font))
+    plt.yticks(fontsize=(fontsize-minus_font))
+    plt.tight_layout()
+    if save_fig: 
+        plt.savefig(f"{output_path}/{model_name}_dist.png", dpi = quality)
 
+    # ==============================================================================
     proposal_1 = mc[mc["bp"] == 1]
     proposal_2 = mc[mc["bp"] == 2]
     proposal_3 = mc[mc["bp"] == 3]
 
-    model_name = os.path.splitext(os.path.split(model)[1])[0]
-
+    # sns.distplot(proposal_1["score"], hist = True, bins = 40, norm_hist=True)
+    # sns.distplot(proposal_2["score"], hist=True, bins= 40, norm_hist=True)
+    # sns.distplot(proposal_3["score"], hist=True, bins = 40, norm_hist=True)
+    
     plt.figure()
-    sns.distplot(proposal_1["score"], hist = True, bins = 40, norm_hist=True)
-    sns.distplot(proposal_2["score"], hist=True, bins= 40, norm_hist=True)
-    sns.distplot(proposal_3["score"], hist=True, bins = 40, norm_hist=True)
-    plt.legend([f"BadProposal = 1, \u03BC: {proposal_1['score'].mean().round(2)}, \u03C3: {proposal_1['score'].std().round(2)}",
-                f"BadProposal = 2, \u03BC: {proposal_2['score'].mean().round(2)}, \u03C3: {proposal_2['score'].std().round(2)}",
-                f"BadProposal = 3, \u03BC: {proposal_3['score'].mean().round(2)}, \u03C3: {proposal_3['score'].std().round(2)}"])
-    plt.xlim(0, 1)
-    plt.savefig(f"{output_path}/{model_name}.png", dpi=600)
+    plt.hist(proposal_1["score"], bins = bins, color="lightgreen", lw=3, fc=(0.5, 0.5, 1, 0.5))
+    plt.hist(proposal_2["score"], bins = bins, color="r", lw=3, fc=(0, 0.5, 0, 0.5))
+    plt.hist(proposal_3["score"], bins = bins, color="k", lw=3, fc=(0, 0, 0, 0.5))
+    
+    plt.legend([f"Cat. 1, \u03BC: {np.round(proposal_1['score'].mean(),2)}, \u03C3: {np.round(proposal_1['score'].std(), 2)}",
+                f"Cat. 2, \u03BC: {np.round(proposal_2['score'].mean(),2)}, \u03C3: {np.round(proposal_2['score'].std(), 2)}",
+                f"Cat. 3, \u03BC: {np.round(proposal_3['score'].mean(),2)}, \u03C3: {np.round(proposal_3['score'].std(), 2)}"],
+                fontsize=fontsize-minus_font)
+    
+    plt.xlim(0,)
+
+    plt.xlabel("Score", fontsize = fontsize-minus_font)
+    plt.ylabel("Count", fontsize = fontsize-minus_font)
+    plt.title("Distribution of scores for the \n three sentence categories", fontsize = fontsize)
+            
+    plt.xticks(fontsize=(fontsize-minus_font))
+    plt.yticks(fontsize=(fontsize-minus_font))
+    plt.tight_layout()
+
+    if save_fig:
+        plt.savefig(f"{output_path}/{model_name}.png", dpi=quality)
 
     mc_hard = mc[mc["score"] > threshold][["idx", "score"]]
     mc_easy = mc[mc["score"] < (1-threshold)][["idx", "score"]]

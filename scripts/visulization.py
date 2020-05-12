@@ -11,11 +11,11 @@ import re
 from sklearn import metrics
 # ============================================================================================================
 
-# local_path = Config.local_path_temp
-# name = "proposals"
-# save_plt = True
-# show_plt = False
-# model_architecture = "mlp_1_img_1_512_0"
+local_path = Config.local_path_temp
+name = "neuraltalk"
+save_plt = False
+show_plt = True
+model_architecture = "mlp_1_img_1_512_0"
 
 # ============================================================================================================
 
@@ -74,8 +74,9 @@ if not os.path.exists(output_path):
 models = glob.glob(f"{txt_file}")
 trains = glob.glob(f"{txt_file_train}")
 
-colors = ['red', 'black', 'blue', 'brown', 'green']
+colors = ['blue', 'orange', 'green',  'brown']
 fontsize = 14
+minus_font = 2
 
 for model in models: 
     data = pd.read_csv(model, sep="\\t", engine='python')
@@ -103,45 +104,73 @@ for model in models:
 
     # Subplots: 
     for i in range(3):
-        grid = plt.GridSpec(2, 2, wspace=0.4, hspace=0.4)
-        if i < 2:
-            x = [x+1 for x in range(len(data.iloc[:,i]))]
-            y = data.iloc[:,i]
-            plt.subplot(grid[0, i])
-            plt.plot(x,y, c=colors[i])
+        grid = plt.GridSpec(2, 2, wspace=0.4, hspace=0.6)
+        if i == 0:
+            x1 = [x+1 for x in range(len(data.iloc[:,i]))]
+            y1 = data.iloc[:,i]
+            x = [x+1 for x in range(len(data.iloc[:,i+1]))]
+            y = data.iloc[:,i+1]
 
-            plt.title(data.columns[i], fontsize=fontsize)
-            plt.xlabel("Epoch", fontsize=fontsize)
+            plt.subplot(grid[i, 0])
+            plt.plot(x,y, c=colors[i])
+            plt.plot(x1,y1, c=colors[i+1])
+
+            plt.legend(["Human", "Machine"]) #, loc="upper left")
+
+            plt.title("Score - Inference", fontsize=fontsize)
+            # plt.xlabel("Epoch", fontsize=fontsize)
             plt.ylabel("Score", fontsize=fontsize)
-            plt.xticks(x, fontsize=(fontsize-8))
-            plt.yticks(fontsize=(fontsize-8))
+            plt.xticks(fontsize=(fontsize-minus_font))
+            plt.yticks(fontsize=(fontsize-minus_font))
             plt.tight_layout()
-        if i == 2:
+        
+        if i == 1:
             x = [x + 1 for x in range(len(data.iloc[:, i]))]
-            y1 = data.iloc[:, i]
+            y1 = data.iloc[:, 1]
             y2 = data.iloc[:, i+1]
-            x_new, y3 = data_train["new_x"], data_train[" Accuracy"]
+
+            plt.subplot(grid[0,1])
+            plt.plot(x, y2, c=colors[0])
+            plt.plot(x, y1, c=colors[1])
+
+            # plt.legend(["Human", "Machine"], loc="upper left")
+
+            plt.title("Sensitivity - Inference", fontsize=fontsize)
+            #plt.xlabel("Epoch", fontsize=fontsize)
+            plt.ylabel("Accuracy", fontsize=fontsize)
+            plt.xticks(fontsize=(fontsize - minus_font))
+            plt.yticks(fontsize=(fontsize - minus_font))
+            plt.tight_layout()
+        
+        if i == 2: 
+            
+            y3 = data_train[" Accuracy"]
+            y3_avg = [np.mean(y3[i:i+10]) for i in range(0, len(y3), int(len(y3)/x[-1])) ]
+            
+            y_acc = (data.iloc[:, i] + data.iloc[:, i+1])*0.5 #  (sent_mc*prev) + (sent_hum*(1-prev))
 
             plt.subplot(grid[1,:])
-            plt.plot(x, y1, c=colors[i])
-            plt.plot(x, y2, c=colors[i+1])
-            plt.plot(x_new, y3, c=colors[i+2])
+            plt.plot(x, y_acc, c=colors[3]) # Test
+            plt.plot(x, y3_avg, c=colors[2]) # Training
 
-            plt.legend(["Prop", "Human", "Train"], loc="upper left")
+            plt.legend(["Test", "Train"]) #, loc="upper left")
 
-            #plt.title("Accuracy", fontsize=fontsize)
+            plt.title("Model accuracy when training and testing", fontsize=fontsize)
             plt.xlabel("Epoch", fontsize=fontsize)
-            plt.ylabel("Sensitivity", fontsize=fontsize)
-            plt.xticks(x, fontsize=(fontsize - 6))
-            plt.yticks(fontsize=(fontsize - 6))
+            plt.ylabel("Accuracy", fontsize=fontsize)
+            plt.xticks(fontsize=(fontsize - minus_font))
+            plt.yticks(fontsize=(fontsize - minus_font))
             plt.tight_layout()
-
+        
     if save_plt:
         plt.savefig(f"{output_path}/{model_name}.png", dpi=600)
     if show_plt:
         plt.show()
     else:
         plt.close()
+
+    
+    # ROC NOT DONE PRETTY YET
 
     # Generating ROC
     ytrue1 = np.ones(len(data))
