@@ -43,7 +43,7 @@ class Config(object):
 
     # How to use Image Feature :
     #   None | 'concat_bf_lstm' | 'concat_af_lstm' | 'only_img'
-    use_img_feat= 'concat_af_lstm'
+    use_img_feat= 'only_img'
 
     # How to combine context feature:
     #   'bilinpool' | 'concat'
