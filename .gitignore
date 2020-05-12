@@ -3,9 +3,13 @@
 scripts/prep_submission_old.py
 scripts/prep_vocab_old.py
 scripts/noice_generator.py
+scripts/generate_exampletexts.py
+
+
 
 test.py
 
 __pycache__
 .DS_store
 .vscode/*
+.idea

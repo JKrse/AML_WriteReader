@@ -100,7 +100,7 @@ def data_loader(data_path=None, data_type = '_full', use_mc_samples=False, load_
         data_val = add_mc_samples(data_val, mc_val)
         data_test = add_mc_samples(data_test, mc_test)
 
-    if load_features: 
+    if load_features==True: 
         data_train['features']['dis'] = np.load(
                 f'{Config.local_path}/data/resnet152/feature_dis_train%s.npy' % (data_type), encoding = 'latin1', allow_pickle=True).item()
         data_val['features']['dis'] = np.load(
@@ -310,6 +310,11 @@ def train(sess, model, data, gen_model, epoch, dim_feat=2048, config=Config(), v
         idx = list(range(len(filename)))
     else:
         idx = list(range(len(filename)*len(gen_model)))
+    
+    # Resize data:
+    if config.resize_data:
+        idx = idx[0:config.resize_samples]
+    
     random.shuffle(idx)
     epoch_size = len(idx) // batch_size
     if batch_size * epoch_size < len(idx):

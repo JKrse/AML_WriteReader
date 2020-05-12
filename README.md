@@ -88,6 +88,20 @@ Note that we assume you've followed through the steps in the *Preparation* secti
 python scripts/score.py --name proposals
 ```
 
+To run the articles
+```bash
+python scripts/score.py --name neuraltalk
+```
+
 The results will be logged in `local_files/proposals_scoring` directory. If you use the default model architecture, the results will be in `local_files/proposals_scoring/mlp_1_img_1_512_0.txt`.
 
+All results can be visualised by 
+```
+python scripts/visulization.py --name "proposals" --show_plt "True" --save_plt "True"  
+```
+And articles
+```
+python scripts/visulization.py --name "neuraltalk" --show_plt "True" --save_plt "True"  
+```
 
+Both ```show_plt``` and ```save_plt``` is by default False. A directory is automatically generated for storing the images.
