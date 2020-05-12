@@ -31,8 +31,8 @@ class Config(object):
     # Resize training data:
     resize_data = True
     resize_samples = 4974
-    
-    # Utilize random search: 
+
+    # Utilize random search:
     random_search = False
 
     # Path for terminal / debugging locally
@@ -74,7 +74,7 @@ def environment_setup():
 
 
 def config_model_coco(config, model_architecture):
-    # config.num_layers = 1 # using 1 LSTM layer # **** THEY ADDED THIS! 
+    # config.num_layers = 1 # using 1 LSTM layer # **** THEY ADDED THIS!
     # Linear models
     if model_architecture == 'concat_no_img_1_512_0':
         config.use_img_feat = None
@@ -121,9 +121,13 @@ def config_model_coco(config, model_architecture):
         config = set_no_da(config)
     # Non-linear models with MLP
     elif model_architecture == 'mlp_1_img_1_512_0':
+<<<<<<< HEAD
         config.use_img_feat = 'concat_af_lstm' # only_img / concat_af_lstm (last correct)
+=======
+        config.use_img_feat = 'concat_af_lstm'
+>>>>>>> 4ae021bd21690d747474df7df7240c0978a548ce
         config.combine_typ = 'concat'
-        config.hidden_size = 512 # 
+        config.hidden_size = 512 #
         config.cls_hidden = 1
     elif model_architecture == 'mlp_1_no_img_1_512_0':
         config.use_img_feat = None

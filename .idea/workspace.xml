@@ -5,6 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/get_examples.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/get_examples.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/visulization.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/visulization.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,7 +18,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scripts/config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
+            <state relative-caret-position="155">
               <caret line="19" column="18" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
               <folding>
                 <element signature="e#1#25#0" expanded="true" />
@@ -29,7 +30,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scripts/image_feature_extraction.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
+            <state relative-caret-position="240">
               <caret line="21" column="22" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
               <folding>
                 <element signature="e#111#123#0" expanded="true" />
@@ -41,7 +42,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scripts/generate_exampletexts.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
+            <state relative-caret-position="660">
               <caret line="47" column="63" selection-start-line="47" selection-start-column="63" selection-end-line="47" selection-end-column="63" />
               <folding>
                 <element signature="e#112#135#0" expanded="true" />
@@ -53,8 +54,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scripts/visulization.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
-              <caret line="84" column="61" selection-start-line="84" selection-start-column="4" selection-end-line="84" selection-end-column="61" />
+            <state relative-caret-position="597">
+              <caret line="149" column="39" selection-start-line="149" selection-start-column="39" selection-end-line="149" selection-end-column="39" />
               <folding>
                 <element signature="e#111#142#0" expanded="true" />
               </folding>
@@ -65,8 +66,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/scripts/get_examples.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="407">
-              <caret line="68" column="33" lean-forward="true" selection-start-line="68" selection-start-column="33" selection-end-line="68" selection-end-column="33" />
+            <state relative-caret-position="260">
+              <caret line="104" selection-start-line="104" selection-end-line="110" selection-end-column="74" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -75,13 +76,28 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/scripts/prep_submission.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="201">
+              <caret line="258" column="61" selection-start-line="258" selection-start-column="61" selection-end-line="258" selection-end-column="61" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/scripts/prep_vocab.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1679" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scripts/score.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="80" column="60" selection-start-line="80" selection-start-column="60" selection-end-line="80" selection-end-column="60" />
+            <state relative-caret-position="-1246">
+              <caret line="21" column="69" selection-start-line="21" selection-start-column="69" selection-end-line="21" selection-end-column="69" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
-                <element signature="e#2509#2648#0" />
               </folding>
             </state>
           </provider>
@@ -90,8 +106,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/scripts/discriminator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="104">
-              <caret line="350" column="16" selection-start-line="350" selection-start-column="16" selection-end-line="350" selection-end-column="16" />
+            <state relative-caret-position="204">
+              <caret line="402" column="50" selection-start-line="402" selection-start-column="50" selection-end-line="402" selection-end-column="50" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -118,6 +134,8 @@
       <find>data_val</find>
       <find>word_to_idx</find>
       <find>idx_to_word</find>
+      <find>cell</find>
+      <find>&quot;gen&quot;</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -127,11 +145,11 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/scripts/visulization.py" />
         <option value="$PROJECT_DIR$/scripts/generate_exampletexts.py" />
-        <option value="$PROJECT_DIR$/scripts/discriminator.py" />
         <option value="$PROJECT_DIR$/scripts/score.py" />
+        <option value="$PROJECT_DIR$/scripts/visulization.py" />
         <option value="$PROJECT_DIR$/scripts/config.py" />
+        <option value="$PROJECT_DIR$/scripts/discriminator.py" />
         <option value="$PROJECT_DIR$/scripts/get_examples.py" />
       </list>
     </option>
@@ -157,6 +175,19 @@
               <item name="WriteReader" type="b2602c69:ProjectViewProjectNode" />
               <item name="WriteReader" type="462c0819:PsiDirectoryNode" />
               <item name="local_files" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WriteReader" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WriteReader" type="462c0819:PsiDirectoryNode" />
+              <item name="local_files" type="462c0819:PsiDirectoryNode" />
+              <item name="proposals_scoring" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WriteReader" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WriteReader" type="462c0819:PsiDirectoryNode" />
+              <item name="local_files" type="462c0819:PsiDirectoryNode" />
+              <item name="proposals_scoring" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="WriteReader" type="b2602c69:ProjectViewProjectNode" />
@@ -202,6 +233,7 @@
       <workItem from="1588247500127" duration="3730000" />
       <workItem from="1588577306518" duration="28476000" />
       <workItem from="1588852870514" duration="603000" />
+      <workItem from="1589100744943" duration="26548000" />
     </task>
     <task id="LOCAL-00001" summary="Random choice of parameters">
       <created>1588594617708</created>
@@ -273,17 +305,23 @@
       <option name="project" value="LOCAL" />
       <updated>1588972309746</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary=",..">
+      <created>1589011389657</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1589011389658</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="65181000" />
+    <option name="totallyTimeSpent" value="97782000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="953" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13308914" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.105006106" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -297,12 +335,12 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.329849" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.3437863" />
-      <window_info anchor="bottom" id="Python Console" order="12" weight="0.4134727" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.4018583" />
+      <window_info anchor="bottom" id="Python Console" order="12" visible="true" weight="0.36585367" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="SciView" order="3" weight="0.51526254" />
+      <window_info active="true" anchor="right" id="SciView" order="3" visible="true" weight="0.42979243" />
       <window_info anchor="right" id="Database" order="4" />
     </layout>
   </component>
@@ -317,37 +355,18 @@
     <MESSAGE value="Forsøgt at hive eksempler ud" />
     <MESSAGE value="Genereret script som får eksempler ud" />
     <MESSAGE value="ændret default threshold" />
-    <option name="LAST_COMMIT_MESSAGE" value="ændret default threshold" />
+    <MESSAGE value=",.." />
+    <option name="LAST_COMMIT_MESSAGE" value=",.." />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/scripts/prep_submission.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-322" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/prep_vocab.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2389" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/image_scraper.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-266" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/generate_exampletexts.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="47" column="63" selection-start-line="47" selection-start-column="63" selection-end-line="47" selection-end-column="63" />
-          <folding>
-            <element signature="e#112#135#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/image_feature_extraction.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
+        <state relative-caret-position="240">
           <caret line="21" column="22" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
           <folding>
             <element signature="e#111#123#0" expanded="true" />
@@ -355,40 +374,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/score.py">
+    <entry file="file://$PROJECT_DIR$/scripts/generate_exampletexts.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="80" column="60" selection-start-line="80" selection-start-column="60" selection-end-line="80" selection-end-column="60" />
+        <state relative-caret-position="660">
+          <caret line="47" column="63" selection-start-line="47" selection-start-column="63" selection-end-line="47" selection-end-column="63" />
           <folding>
-            <element signature="e#0#38#0" expanded="true" />
-            <element signature="e#2509#2648#0" />
+            <element signature="e#112#135#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/discriminator.py">
+    <entry file="file://$PROJECT_DIR$/scripts/prep_submission.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="350" column="16" selection-start-line="350" selection-start-column="16" selection-end-line="350" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="201">
+          <caret line="258" column="61" selection-start-line="258" selection-start-column="61" selection-end-line="258" selection-end-column="61" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scripts/visulization.py">
+    <entry file="file://$PROJECT_DIR$/scripts/prep_vocab.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="84" column="61" selection-start-line="84" selection-start-column="4" selection-end-line="84" selection-end-column="61" />
-          <folding>
-            <element signature="e#111#142#0" expanded="true" />
-          </folding>
-        </state>
+        <state relative-caret-position="-1679" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/scripts/config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
+        <state relative-caret-position="155">
           <caret line="19" column="18" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
           <folding>
             <element signature="e#1#25#0" expanded="true" />
@@ -396,10 +406,40 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/visulization.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="597">
+          <caret line="149" column="39" selection-start-line="149" selection-start-column="39" selection-end-line="149" selection-end-column="39" />
+          <folding>
+            <element signature="e#111#142#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/discriminator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="402" column="50" selection-start-line="402" selection-start-column="50" selection-end-line="402" selection-end-column="50" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/score.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1246">
+          <caret line="21" column="69" selection-start-line="21" selection-start-column="69" selection-end-line="21" selection-end-column="69" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/get_examples.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="407">
-          <caret line="68" column="33" lean-forward="true" selection-start-line="68" selection-start-column="33" selection-end-line="68" selection-end-column="33" />
+        <state relative-caret-position="260">
+          <caret line="104" selection-start-line="104" selection-end-line="110" selection-end-column="74" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>

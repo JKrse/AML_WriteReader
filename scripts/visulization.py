@@ -113,8 +113,8 @@ for model in models:
             plt.title(data.columns[i], fontsize=fontsize)
             plt.xlabel("Epoch", fontsize=fontsize)
             plt.ylabel("Score", fontsize=fontsize)
-            plt.xticks(x, fontsize=(fontsize-2))
-            plt.yticks(fontsize=(fontsize-2))
+            plt.xticks(x, fontsize=(fontsize-8))
+            plt.yticks(fontsize=(fontsize-8))
             plt.tight_layout()
         if i == 2:
             x = [x + 1 for x in range(len(data.iloc[:, i]))]
@@ -129,11 +129,11 @@ for model in models:
 
             plt.legend(["Prop", "Human", "Train"], loc="upper left")
 
-            plt.title("Accuracy", fontsize=fontsize)
+            #plt.title("Accuracy", fontsize=fontsize)
             plt.xlabel("Epoch", fontsize=fontsize)
-            plt.ylabel("Accuracy", fontsize=fontsize)
-            plt.xticks(x, fontsize=(fontsize - 2))
-            plt.yticks(fontsize=(fontsize - 2))
+            plt.ylabel("Sensitivity", fontsize=fontsize)
+            plt.xticks(x, fontsize=(fontsize - 6))
+            plt.yticks(fontsize=(fontsize - 6))
             plt.tight_layout()
 
     if save_plt:
@@ -147,7 +147,7 @@ for model in models:
     ytrue1 = np.ones(len(data))
     ytrue0 = np.zeros(len(data))
     ytrue = pd.DataFrame(np.concatenate([ytrue1, ytrue0], axis = 0))
-    yprobs = pd.concat([data[cols[2]], 1 - data[cols[0]]], axis=0)
+    yprobs = pd.concat([data[cols[2]], data[cols[0]]], axis=0)
 
     fpr, tpr, _ = metrics.roc_curve(ytrue, yprobs)
     auc = metrics.auc(fpr, tpr)
