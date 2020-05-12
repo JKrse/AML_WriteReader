@@ -1,4 +1,3 @@
-
 from pathlib import Path 
 import os
 
@@ -57,7 +56,6 @@ class Config(object):
     use_mc_samples       = True  # Whether using Monte Carlo Sampled Captions
 
 
-
 def environment_setup():
     """
     Generate the folder structure needed for project.
@@ -73,7 +71,6 @@ def environment_setup():
 
 # if not os.path.exists(Config.local_path):
 #     environment_setup()
-
 
 
 def config_model_coco(config, model_architecture):
@@ -124,7 +121,7 @@ def config_model_coco(config, model_architecture):
         config = set_no_da(config)
     # Non-linear models with MLP
     elif model_architecture == 'mlp_1_img_1_512_0':
-        config.use_img_feat = 'concat_af_lstm' 
+        config.use_img_feat = 'concat_af_lstm' # only_img / concat_af_lstm (last correct)
         config.combine_typ = 'concat'
         config.hidden_size = 512 # 
         config.cls_hidden = 1

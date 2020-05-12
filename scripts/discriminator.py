@@ -351,7 +351,6 @@ def train(sess, model, data, gen_model, epoch, dim_feat=2048, config=Config(), v
     accuracy_total = []
 
     for i in range(epoch_size): 
-    # for i in range(300): # CHANGE
         if i == epoch_size - 1:
             idx_batch = idx[batch_size*i:]
         else:
@@ -374,6 +373,8 @@ def train(sess, model, data, gen_model, epoch, dim_feat=2048, config=Config(), v
                 Random Word (RW)        [1]
                 Word Permutation(WP)    [2]
             """
+            p = 0 # neural_r0r0: 0 / neural_r0r1: 1
+
             curr_img = copy.deepcopy(data['features']['dis'][filename[idx_batch[j]]])
             real_cap = copy.deepcopy(data['captions']['dis'][filename[idx_batch[j]]]['human'])
             # 1st pair: (real0, real1)
@@ -386,7 +387,7 @@ def train(sess, model, data, gen_model, epoch, dim_feat=2048, config=Config(), v
             img[j*2,:]  = curr_img
 
             if len(real_cap.shape) > 1:
-                x[j*2+len(idx_batch)*num_input, :]   = real_cap[real_idx[1]]
+                x[j*2+len(idx_batch)*num_input, :]   = real_cap[real_idx[p]]
             else:
                 x[j*2+len(idx_batch)*num_input, :] = real_cap
             
