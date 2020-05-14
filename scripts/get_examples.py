@@ -9,6 +9,7 @@ import glob
 import copy
 import seaborn as sns
 import matplotlib.pyplot as plt
+from sklearn import metrics
 from scipy.stats import ttest_ind
 from scipy import stats
 
@@ -87,10 +88,10 @@ minus_font = 4
 bins = 40
 quality = 1200
 
-model_name = os.path.splitext(os.path.split(model)[1])[0]
 
 for model in models:
     test_results = pd.read_csv(model, sep="\t", engine='python')
+    model_name = os.path.splitext(os.path.split(model)[1])[0]
 
     idx = []
     scores = []
@@ -109,6 +110,22 @@ for model in models:
 
     data = pd.DataFrame([idx, scores, cat, bp]).T
     data.columns = ["idx", "score", "cat", "bp"]
+
+    fpr, tpr, roc_thesholds = metrics.roc_curve(data["cat"], data["score"])
+    auc = metrics.auc(fpr, tpr)
+
+    plt.plot(fpr, tpr)
+    plt.xlabel("False Positive Rate", fontsize = fontsize-minus_font)
+    plt.ylabel("True Positive Rate", fontsize = fontsize-minus_font)
+    plt.title(f"ROC with AUC: {auc:.2f}", fontsize = fontsize)
+    plt.xticks(fontsize=(fontsize - minus_font))
+    plt.yticks(fontsize=(fontsize - minus_font))
+    plt.tight_layout()
+
+    if save_fig:
+        plt.savefig(f"{output_path}/{model_name}_ROC.png", dpi=600)
+    else:
+        plt.close()
 
     mc = data[data["cat"] == 0]
     human = data[data["cat"] == 1]

@@ -16,7 +16,7 @@ class Config(object):
     """
     learning_rate = 0.0008
     learning_rate_decay = 0.9
-    max_epoch = 15 #
+    max_epoch = 30 #
     grad_clip = 1.0
     num_layers = 1
     num_steps = 15

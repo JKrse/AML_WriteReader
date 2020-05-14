@@ -170,28 +170,36 @@ for model in models:
         plt.close()
 
     
-    # ROC NOT DONE PRETTY YET
+    # ROC NOT DONE PRETTY YET - ROC curve moved to get_examples.py
 
     # Generating ROC
-    ytrue1 = np.ones(len(data))
-    ytrue0 = np.zeros(len(data))
-    ytrue = pd.DataFrame(np.concatenate([ytrue1, ytrue0], axis = 0))
-    yprobs = pd.concat([data[cols[2]], data[cols[0]]], axis=0)
-
-    fpr, tpr, _ = metrics.roc_curve(ytrue, yprobs)
-    auc = metrics.auc(fpr, tpr)
-
-    plt.plot(fpr, tpr)
-    plt.xlabel("False Positive Rate")
-    plt.ylabel("True Positive Rate")
-    plt.title(f"ROC with AUC: {auc:.2f}")
-
-    if save_plt:
-        plt.savefig(f"{output_path}/{model_name}_ROC.png", dpi=600)
-    if show_plt:
-        plt.show()
-    else:
-        plt.close()
+    #ytrue1 = np.ones(len(data))
+    #ytrue0 = np.zeros(len(data))
+    #ytrue = pd.DataFrame(np.concatenate([ytrue1, ytrue0], axis = 0))
+    #yprobs = pd.concat([data[cols[2]], data[cols[0]]], axis=0).reset_index(drop=True)
+#
+    #fpr, tpr, _ = metrics.roc_curve(ytrue, yprobs)
+    #auc = metrics.auc(fpr, tpr)
+#
+    #plt.plot(fpr, tpr)
+    #plt.xlabel("False Positive Rate")
+    #plt.ylabel("True Positive Rate")
+    #plt.title(f"ROC with AUC: {auc:.2f}")
+#
+    ## ROC curve created manually
+    #roc_data = pd.DataFrame()
+    #roc_data["score"] = yprobs
+    #roc_data["class"] = ytrue
+#
+    #TPR = TP/(TP+FN)
+    #FPR = 1 - TN/(TN+FP)
+#
+    #if save_plt:
+    #    plt.savefig(f"{output_path}/{model_name}_ROC.png", dpi=600)
+    #if show_plt:
+    #    plt.show()
+    #else:
+    #    plt.close()
 
 
 
