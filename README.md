@@ -8,7 +8,7 @@ TensorFlow implementation for the paper:
 [Yin Cui](http://www.cs.cornell.edu/~ycui/), [Guandao Yang](http://www.guandaoyang.com/), [Andreas Veit](https://www.cs.cornell.edu/~andreas/), [Xun Huang](http://www.cs.cornell.edu/~xhuang/), [Serge Belongie](http://blogs.cornell.edu/techfaculty/serge-belongie/)\
 CVPR 2018
 
-Code originates from this article but has been modified for our application.
+Code originates from this article but has been modified for our application. The data used for our implementation has been provided by the company and is not avaible. 
 
 This repository contains a discriminator that could be trained to evaluate image captioning systems. The discriminator is trained to distinguish between machine generated captions and human written ones. During testing, the trained discriminator take the cadidate caption, the reference caption, and optionally the image to be captioned as input. Its output probability of how likely the candidate caption is human written can be used to evaluate the candidate caption. Please refer to our paper [[link]](https://vision.cornell.edu/se3/wp-content/uploads/2018/03/1501.pdf) for more detail.
 
